@@ -1,0 +1,203 @@
+\documentclass{mimosis}
+
+\usepackage{epigraph}
+\usepackage{float}
+\usepackage{pgf-umlsd}
+\usepackage{parskip}
+\usepackage{metalogo}
+\usepackage{newlfont}
+\usepackage{makecell}
+\usepackage{graphicx}
+\usepackage{hhline}
+
+% copyrighting
+\usepackage{hyperxmp}
+\usepackage[
+type={CC},
+modifier={by-sa},
+version={4.0},
+]{doclicense}
+
+% This ensures that I am able to typeset bold font in table while still aligning the numbers
+% correctly.
+\usepackage{etoolbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% I like the bibliography to be extremely plain, showing only a numeric
+% identifier and citing everything in simple brackets. The first names,
+% if present, will be initialized. DOIs and URLs will be preserved.
+
+\usepackage[%
+  autocite     = plain,
+  backend      = bibtex,
+  doi          = true,
+  url          = true,
+  giveninits   = true,
+  hyperref     = true,
+  maxbibnames  = 99,
+  maxcitenames = 2,
+  sortcites    = false,
+  style        = numeric,
+  ]{biblatex}
+
+\input{bibliography-mimosis}
+\addbibresource{thesis.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fonts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifxetexorluatex
+  \usepackage{unicode-math}
+  % \setmainfont{EB Garamond}
+  % \setmathfont{Garamond Math}
+
+  % Load some missing symbols from another font.
+  % \setmathfont{STIX Two Math}[%
+  %   range = {
+  %     \sharp,
+  %     \natural,
+  %     \flat,
+  %     \clubsuit,
+  %     \spadesuit,
+  %     \checkmark
+  %   }
+  % ]
+  \setmonofont[Scale=MatchLowercase]{Source Code Pro}
+\else
+  \usepackage[lf]{ebgaramond}
+  \usepackage[oldstyle,scale=0.7]{sourcecodepro}
+  \singlespacing
+\fi
+
+\makeindex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Listings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,columns=flexible,breaklines=true}
+\lstdefinelanguage{Jolie}{
+  tabsize = 1,
+  keepspaces=true,
+  % backgroundcolor=\color{Peach!20},
+  mathescape=true,
+  keywordstyle=\upshape\bfseries,
+  keywords={from,as,RequestResponse,OneWay,import,spawn,over,in,foreign,type\ ,interface,requestResponse,undefined,int,void,string,range,length,enum,long,double,bool,outputPort,service,inputPort,main,location,protocol,interfaces,if,throw,undef},
+  morecomment=[f][\itshape][0]{///},
+  literate = {\{}{{\upshape\bfseries\{}}1 {\}}{{\upshape\bfseries\}}}1 {\ )}{{\upshape\bfseries)}}1 {(\ }{{\upshape\bfseries(}}1 {?}{{\upshape\bfseries\hspace{0pt}?}}1 {...}{{$\ldots$}}1
+}
+% \lstdefinelanguage{Jolie}{
+%     sensitive=true,
+%     keywords={type, service},
+%     otherkeywords={>, <, ==},
+%     keywords = [2]{bool, int, string, undefined},
+%     keywordstyle=\color[rgb]{0.96,0.42,0.4},
+%     keywordstyle=[2]\color[rgb]{0.44,0.26,0.76},
+%     morecomment=[l]{//},
+%     morecomment=[s]{/*}{*/},
+%     morestring=[b]"
+% }
+\newcommand\YAMLcolonstyle{\bfseries}
+\newcommand\YAMLkeystyle{\ttfamily}
+\newcommand\YAMLvaluestyle{\mdseries}
+
+\makeatletter
+
+\newcommand\language@yaml{yaml}
+
+\expandafter\expandafter\expandafter\lstdefinelanguage
+\expandafter{\language@yaml}
+{
+  keywords={true,false,null,y,n},
+  keywordstyle=\upshape\bfseries,
+  basicstyle=\YAMLkeystyle,                                 % assuming a key comes first
+  sensitive=false,
+  comment=[l]{\#},
+  morecomment=[s]{/*}{*/},
+  stringstyle=\YAMLvaluestyle\ttfamily,
+  moredelim=**[il][\YAMLcolonstyle{:}\YAMLvaluestyle]{:},   % switch to value style at :
+  morestring=[b]',
+  morestring=[b]",
+  literate =    {---}{{\ProcessThreeDashes}}3
+                {>}{{\bfseries\textgreater}}1     
+                {|}{{\bfseries\textbar}}1 
+                {\ -\ }{{\mdseries\ -\ }}3,
+}
+
+% switch to key style at EOL
+\lst@AddToHook{EveryLine}{\ifx\lst@language\language@yaml\YAMLkeystyle\fi}
+\makeatother
+
+\newcommand\ProcessThreeDashes{\llap{\color{cyan}\mdseries-{-}-}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hyperlinks & references
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[%
+  colorlinks = true,
+  citecolor  = black,
+  linkcolor  = black,
+  urlcolor   = black,
+  unicode,
+  ]{hyperref}
+
+\usepackage{bookmark}
+\usepackage[capitalize,noabbrev]{cleveref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ordinals
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\@ifundefined{st}{%
+  \newcommand{\st}{\textsuperscript{\textup{st}}\xspace}
+}{}
+\@ifundefined{rd}{%
+  \newcommand{\rd}{\textsuperscript{\textup{rd}}\xspace}
+}{}
+\@ifundefined{nd}{%
+  \newcommand{\nd}{\textsuperscript{\textup{nd}}\xspace}
+}{}
+\makeatother
+
+\renewcommand{\th}{\textsuperscript{\textup{th}}\xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Incipit
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\author{Gejsi Vjerdha}
+
+\begin{document}
+\def\f{Fenrir}
+
+\frontmatter
+  \include{sections/frontmatter}
+  \include{sections/copyright}
+  \include{sections/quote}
+  \include{sections/abstract}
+  \newpage
+
+  \tableofcontents
+
+\mainmatter
+\include{sections/introduction}
+\include{sections/background}
+\include{sections/implementation}
+\include{sections/conclusion}
+
+% This ensures that the subsequent sections are being included as root
+% items in the bookmark structure of your PDF reader.
+\bookmarksetup{startatroot}
+\backmatter
+  \printbibliography
+  \include{sections/acknowledgements}
+
+\end{document}
