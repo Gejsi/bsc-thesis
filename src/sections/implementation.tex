@@ -3,7 +3,7 @@
 
 This chapter presents an in-depth description of how \f{} works
 and demonstrates how much it can simplify developers' experience
-by showing a real-world example with an extensive usage of its features.
+by showing real-world examples with extensive usage of its features.
 Furthermore, since we are creating an open-source project, the structure of
 the repository will also be analyzed.
 
@@ -26,7 +26,6 @@ uses the generated metadata to deploy to \textit{AWS Lambda}.
   \label{fig:pipeline}
 \end{figure}
 
-
 The transpilation pipeline, depicted in Figure \ref{fig:pipeline},
 starts with the parsing of the input source code, which produces AST nodes with their related
 annotations. Then, each annotation induces the application of its related
@@ -38,6 +37,50 @@ and the related metadata is also appended to a
 \verb|serverless.yml| file which specifies function deployment
 properties (e.g., the address to invoke a given function).
 
-\subsection{Brief example of a Monolith to Serverless compilation}
+It is important to notice that \f{} doesn't lock developers in managing their
+functions only through its tools, instead, its primary objective is to facilitate
+the incremental adoption of the serverless paradigm.
 
-The following brief example should\dots
+\subsection{Brief example: Monolith to Serverless conversion}
+
+Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+
+\section{Detailed review}
+
+This section explains each step of the pipeline, defines annotations precisely and shows how to create new ones.
+
+\subsection{Parsing}
+
+\f{} requires a configuration file, that must be named \verb|fenrir.config.json|, to understand where to operate:
+
+\begin{lstlisting}[language=json]
+{
+  "files": ["input/source.ts"],
+  "serverlessConfigPath": "input/serverless.yml",
+  "outputDirectory": "output",
+  "annotations": {
+    "CustomAnnotation": "annotations/custom-annotation.ts"
+  }
+}
+\end{lstlisting}
+
+The \verb|files| field accepts an array of filenames or an entire directory,
+and it is used to represent which files will be consumed.
+
+The \verb|serverlessConfigPath| field points at the input \textit{SLS} configuration
+that must contain some mandatory input metadata, such as the region which the functions will be deployed on.
+
+The \verb|outputDirectory| field indicates where the emitted files will be placed.
+
+The \verb|annotations| field locates custom annotations as it takes an object
+where the keys represent the new names and the values refer to their associated implementations.
+
+After creating the configuration, \f{} can be initialized through our CLI tool\dots
+
+\subsection{Transformations}
+
+Parlare delle singole annotazioni.
+
+\subsection{Emit}
+
+Magari parlare della gestione degli errori. E poi dell'emit.
