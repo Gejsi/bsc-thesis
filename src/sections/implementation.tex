@@ -65,7 +65,7 @@ This section explains each step of the pipeline, defines annotations precisely a
 \end{lstlisting}
 
 The \verb|files| field accepts an array of filenames or an entire directory,
-and it is used to represent which files will be consumed.
+and it is used to represent which files will be parsed by the transpiler.
 
 The \verb|serverlessConfigPath| field points at the input \textit{SLS} configuration
 that must contain some mandatory input metadata, such as the region which the functions will be deployed on.
@@ -75,11 +75,19 @@ The \verb|outputDirectory| field indicates where the emitted files will be place
 The \verb|annotations| field locates custom annotations as it takes an object
 where the keys represent the new names and the values refer to their associated implementations.
 
-After creating the configuration, \f{} can be initialized through our CLI tool\dots
+\paragraph{\textbf{Fenrir's CLI}}
+After creating the configuration, \f{} can be started through our CLI tool
+by optionally passing as a flag the directory in which it is contained.
+\begin{lstlisting}[language=bash, style=bashstyle]
+# defaults to the current directory (.) for its file lookup...
+> fenrir
+# ...or uses a custom path
+> fenrir -g input-directory
+\end{lstlisting}
 
-\subsection{Transformations}
+\subsection{Core annotations}
 
-Parlare delle singole annotazioni.
+Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
 
 \subsection{Emit}
 
