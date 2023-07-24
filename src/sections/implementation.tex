@@ -174,7 +174,24 @@ to facilitate this process, each source file may be visited multiple times.
 
 \subsection{Core Annotations}
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+\f{} offers four core annotations which generate code and/or metadata.
+Their transformers can handle code manipulation, deployment metadata, or a combination of both functionalities:
+by pipelining annotations, we can effectively utilize the strengths of different approaches.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Core annotations}
+    \begin{tabular}{llcc}
+        \toprule
+        \textbf{Name} & \textbf{Code} & \textbf{Metadata} \\
+        \midrule
+        \$Fixed & Yes & Yes \\
+        \$TrackMetrics & Yes & No \\
+        \$HttpApi & No & Yes \\
+        \$Scheduled & No & Yes \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
 \subsection{Custom Annotations}
 
