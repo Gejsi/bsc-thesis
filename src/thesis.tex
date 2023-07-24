@@ -9,6 +9,7 @@
 \usepackage{makecell}
 \usepackage{graphicx}
 \usepackage{hhline}
+\usepackage{amsmath}
 
 % copyrighting
 \usepackage{hyperxmp}
@@ -81,10 +82,10 @@ version={4.0},
 
 \usepackage{xcolor}
 \usepackage{listings}
-% \lstset{basicstyle=\ttfamily,columns=flexible,breaklines=true}
+
 \lstset{
   extendedchars=true,
-  basicstyle=\ttfamily,
+  basicstyle=\ttfamily\small,
   showstringspaces=false,
   showspaces=false,
   numbers=left,
@@ -94,6 +95,25 @@ version={4.0},
   breaklines=true,
   showtabs=false,
   captionpos=b
+}
+\newcommand{\dollar}{{\color{purple}\mbox{\textdollar}}}
+
+\lstdefinelanguage{javascript}{
+  keywords={abstract, any, as, async, await, bigint, boolean, break, case, catch, class, const, continue, debugger, declare, default, delete, do, else, enum, export, extends, false, finally, for, from, function, get, if, implements, import, in, infer, instanceof, interface, is, keyof, let, module, namespace, never, new, null, number, object, of, package, private, protected, public, readonly, require, return, set, static, string, super, switch, symbol, this, throw, true, try, type, typeof, undefined, unique, unknown, var, void, while, with, yield},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]\`,
+  morestring=[b]",
+  basicstyle=\footnotesize\ttfamily,
+  mathescape=true
 }
 
 % Bash language style
@@ -136,6 +156,7 @@ version={4.0},
 \newcommand\YAMLcolonstyle{\bfseries}
 \newcommand\YAMLkeystyle{\ttfamily}
 \newcommand\YAMLvaluestyle{\mdseries}
+\newcommand{\annotation}[1]{{\color{purple}\texttt{#1}}}
 
 \makeatletter
 

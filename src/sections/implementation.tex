@@ -64,7 +64,7 @@ This section explains each step of the pipeline, defines annotations precisely a
 }
 \end{lstlisting}
 
-The \verb|files| field accepts an array of filenames or an entire directory,
+The \verb|files| field accepts an array of filenames or a directory,
 and it is used to represent which files will be parsed by the transpiler.
 
 The \verb|serverlessConfigPath| field points at the input \textit{SLS} configuration
@@ -84,10 +84,64 @@ by optionally passing as a flag the directory in which it is contained.
 # ...or uses a custom path
 > fenrir -g input-directory
 \end{lstlisting}
+Furthermore, the CLI offers the \verb|init| sub-command to ease the setup needed for the entire pipeline
+by generating the necessary boilerplate and configuration files.
 
-\subsection{Core annotations}
+% TODO: ricorda di parlare di quanto sia ottimo il compiler api di ts in Background.
+% perché ha informazioni su tutto il progetto e non solo sui file.
+\subsubsection{AST Traversal}
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+Through the \textit{TypeScript} compiler API, each sources' AST is traversed
+by a visitor function which collects some data (e.g., dependencies imports) and examines
+certain types of node in order to process annotations, namely \textit{exported function declarations}.
+Lookups are restricted only to this syntactic category for two reasons:
+\begin{itemize}
+  \item \verb|export| ensures the functions are public and ready to be deployed.
+  \item \verb|function declarations| minimize the code needed to control the AST.
+    Considering that \textit{JavaScript} provides three distinct ways of declaring a function,
+    accommodating all of these variations would inevitably result in a threefold expansion of the manipulation code.
+    Moreover, function declarations are the idiomatic technique to write top-level functions.
+\end{itemize}
+
+\begin{lstlisting}[language=javascript, caption={Examples of examined or skipped nodes.}]
+// Skipped
+const a = 2;
+// Skipped
+for (const b of [1, 2, 3]) {}
+// Accepted
+export function foo() {}
+// Skipped
+export const fiz = () => {}
+// Skipped
+export const bar = function() {}
+\end{lstlisting}
+
+The accepted functions are further examined as their annotations are processed, and
+their bodies are visited to handle AST transformations.
+
+\subsection{Annotations}
+
+Annotations are syntactical units, or keywords, enclosed within JSDoc comments,
+each associated with its respective transformer.
+They can be expressed using a BNF-like syntax:
+\begin{equation*}
+\begin{aligned}
+    \langle \text{Annotation} \rangle & ::= "\$" \langle \text{Name} \rangle [ "(" \langle \text{Object} \rangle ")" ] \\
+    \langle \text{Name} \rangle & ::= [\text{a-zA-Z\_}][\text{a-zA-Z0-9\_}]* \\
+    \langle \text{Object} \rangle & ::= \langle \text{TypeScriptObject} \rangle \\
+    \langle \text{TypeScriptObject} \rangle & ::= \dots \\
+\end{aligned}
+\end{equation*}
+This representation does not intend to provide a formal and precise depiction of the syntax of annotations.
+Nevertheless, it serves to offer a general impression of how they can be written within the code.
+\begin{lstlisting}[language=javascript, caption={Generic examples of annotation.}]
+/** $\dollar$Foo */
+
+/** $\dollar$Bar(param: "first") */
+
+/** $\dollar$Fiz(first: true, second: [1, 2, 3], third: (a, b) => a + b) */
+\end{lstlisting}
+
 
 \subsection{Emit}
 
