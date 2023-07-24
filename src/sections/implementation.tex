@@ -45,11 +45,11 @@ the incremental adoption of the serverless paradigm.
 
 Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
 
-\section{Detailed review}
+% \section{Detailed review}
 
-This section explains each step of the pipeline, defines annotations precisely and shows how to create new ones.
+% This section explains each step of the pipeline, defines annotations precisely and shows how to create new ones.
 
-\subsection{Parsing}
+\section{Parsing}
 
 \f{} requires a configuration file that must be named \verb|fenrir.config.json| to understand where to operate:
 
@@ -103,12 +103,12 @@ Lookups are restricted only to this syntactic category for two reasons:
     Moreover, function declarations are the idiomatic technique to write top-level functions.
 \end{itemize}
 
-\begin{lstlisting}[language=javascript, caption={Examples of examined or skipped nodes.}]
+\begin{lstlisting}[language=javascript, caption={Examples of processed or skipped nodes.}]
 // Skipped
 const a = 2;
 // Skipped
 for (const b of [1, 2, 3]) {}
-// Accepted
+// Processed
 export function foo() {}
 // Skipped
 export const fiz = () => {}
@@ -116,20 +116,20 @@ export const fiz = () => {}
 export const bar = function() {}
 \end{lstlisting}
 
-The accepted functions are further examined as their annotations are processed, and
+The processed functions have their annotations examined, and
 their bodies are visited to handle AST transformations.
 
-\subsection{Annotations}
+\section{Annotations}
 
 Annotations are syntactical units, or keywords, enclosed within JSDoc comments,
-each associated with its respective transformer.
+each associated with their respective transformer.
 They can be expressed using a BNF-like syntax:
 \begin{equation*}
 \begin{aligned}
-    \langle \text{Annotation} \rangle & ::= "\$" \langle \text{Name} \rangle [ "(" \langle \text{Parameters} \rangle ")" ] \\
-    \langle \text{Name} \rangle & ::= [\text{a-zA-Z\_}][\text{a-zA-Z0-9\_}]* \\
-    \langle \text{Parameters} \rangle & ::= \langle \text{TypeScriptObject} \rangle \\
-    \langle \text{TypeScriptObject} \rangle & ::= \dots \\
+    \text{Annotation} & ::= "\$" \langle \text{Name} \rangle [ "(" \langle \text{Parameters} \rangle ")" ] \\
+    \text{Name} & ::= [\text{a-zA-Z\_}][\text{a-zA-Z0-9\_}]* \\
+    \text{Parameters} & ::= \langle \text{TypeScriptObject} \rangle \\
+    \text{TypeScriptObject} & ::= \dots \\
 \end{aligned}
 \end{equation*}
 This representation does not intend to provide a formal and precise depiction of the syntax of annotations.
@@ -148,6 +148,9 @@ Nevertheless, it serves to offer a general impression of how they can be written
  * $\dollar$Bar(
  *    param: "fiz"
  * )
+ *
+ * all these explanatory texts are not 
+ * harmful, as they are simply ignored.
  */
 \end{lstlisting}
 
@@ -163,6 +166,21 @@ hence, they are as powerful as regular objects\cite{mdn_objects}
 meaning that even complex structures (arrays, functions, etc...) can be used
 during the compilation step to enrich transformations.
 
-\subsection{Emit}
+Another crucial feature of annotations is their composability,
+as multiple annotations can be written within the same JSDoc,
+essentially defining dedicated compilation pipelines by passing the output
+of a transformation as input for the subsequent ones:
+to facilitate this process, each source file may be visited multiple times.
+
+\subsection{Core Annotations}
+
+Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+
+\subsection{Custom Annotations}
+
+Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+
+\section{Emit}
 
 Magari parlare della gestione degli errori. E poi dell'emit.
+E di come gli argomenti sono trattati.
