@@ -51,7 +51,7 @@ This section explains each step of the pipeline, defines annotations precisely a
 
 \subsection{Parsing}
 
-\f{} requires a configuration file, that must be named \verb|fenrir.config.json|, to understand where to operate:
+\f{} requires a configuration file that must be named \verb|fenrir.config.json| to understand where to operate:
 
 \begin{lstlisting}[language=json]
 {
@@ -126,22 +126,42 @@ each associated with its respective transformer.
 They can be expressed using a BNF-like syntax:
 \begin{equation*}
 \begin{aligned}
-    \langle \text{Annotation} \rangle & ::= "\$" \langle \text{Name} \rangle [ "(" \langle \text{Object} \rangle ")" ] \\
+    \langle \text{Annotation} \rangle & ::= "\$" \langle \text{Name} \rangle [ "(" \langle \text{Parameters} \rangle ")" ] \\
     \langle \text{Name} \rangle & ::= [\text{a-zA-Z\_}][\text{a-zA-Z0-9\_}]* \\
-    \langle \text{Object} \rangle & ::= \langle \text{TypeScriptObject} \rangle \\
+    \langle \text{Parameters} \rangle & ::= \langle \text{TypeScriptObject} \rangle \\
     \langle \text{TypeScriptObject} \rangle & ::= \dots \\
 \end{aligned}
 \end{equation*}
 This representation does not intend to provide a formal and precise depiction of the syntax of annotations.
 Nevertheless, it serves to offer a general impression of how they can be written within the code.
-\begin{lstlisting}[language=javascript, caption={Generic examples of annotation.}]
+\begin{lstlisting}[language=javascript, caption={Generic examples of annotation.}, label={lst:annotations-examples}]
 /** $\dollar$Foo */
 
 /** $\dollar$Bar(param: "first") */
 
 /** $\dollar$Fiz(first: true, second: [1, 2, 3], third: (a, b) => a + b) */
+
+/**
+ * Annotations enrich docs...
+ * $\dollar$Foo
+ * ...and can even be multiline.
+ * $\dollar$Bar(
+ *    param: "fiz"
+ * )
+ */
 \end{lstlisting}
 
+Annotations are designed to avoid cluttering \textit{JavaScript} with new syntax,
+as they can only be written inside JSDoc comments.
+Thus, they serve a dual-purpose by not only providing functionality
+but also serving as supplementary documentation for the codebase.
+
+Listing \ref{lst:annotations-examples} provides a valuable insight on how annotations
+may be parameterized to modify transformers' functionality.
+In fact, arguments undergo parsing as a \textit{TypeScript} object literal,
+hence, they are as powerful as regular objects\cite{mdn_objects}
+meaning that even complex structures (arrays, functions, etc...) can be used
+during the compilation step to enrich transformations.
 
 \subsection{Emit}
 
