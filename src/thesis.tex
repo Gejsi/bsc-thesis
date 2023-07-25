@@ -102,6 +102,12 @@ version={4.0},
 }
 \newcommand{\dollar}{{\color{purple}\mbox{\textdollar}}}
 
+\lstdefinelanguage{console}{
+  basicstyle=\color{purple}\footnotesize\ttfamily,
+  mathescape=true,
+  numberstyle=\color{black}
+}
+
 \lstdefinelanguage{javascript}{
   keywords={abstract, any, as, async, await, bigint, boolean, break, case, catch, class, const, continue, debugger, declare, default, delete, do, else, enum, export, extends, false, finally, for, from, function, get, if, implements, import, in, infer, instanceof, interface, is, keyof, let, module, namespace, never, new, null, number, object, of, package, private, protected, public, readonly, require, return, set, static, string, super, switch, symbol, this, throw, true, try, type, typeof, undefined, unique, unknown, var, void, while, with, yield},
   keywordstyle=\color{blue}\bfseries,
@@ -160,7 +166,7 @@ version={4.0},
 \newcommand\YAMLcolonstyle{\color{red}\mdseries}
 \newcommand\YAMLkeystyle{\color{black}}
 \newcommand\YAMLvaluestyle{\color{blue}\mdseries}
-\newcommand{\annotation}[1]{{\color{purple}\texttt{#1}}}
+\newcommand{\annotation}[1]{{\color{purple}\footnotesize\texttt{#1}}}
 
 \makeatletter
 

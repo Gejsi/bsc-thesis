@@ -41,9 +41,9 @@ It is important to notice that \f{} doesn't lock developers in managing their
 functions only through its tools, instead, its primary objective is to facilitate
 the incremental adoption of the serverless paradigm.
 
-\subsection{Brief example: Monolith to Serverless conversion}
+% \subsection{Brief example: Monolith to Serverless conversion}
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+% Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
 
 % \section{Detailed review}
 
@@ -215,8 +215,7 @@ passed as metadata for the function deployment.
 % ----------------------------------------------------------
 % FIXED EXAMPLE
 % ----------------------------------------------------------
-
-\begin{lstlisting}[language=javascript, caption={Input code}]
+\begin{lstlisting}[language=javascript, caption={Input code for \annotation{$\dollar$Fixed}}]
 /** $\dollar$Fixed(timeout: 10) */
 export async function foo(id) {
   if (!isValid(id)) {
@@ -230,7 +229,7 @@ export async function foo(id) {
 \end{lstlisting}
 
 
-\begin{lstlisting}[language=javascript, caption={Output code}]
+\begin{lstlisting}[language=javascript, caption={Output code from \annotation{$\dollar$Fixed}}]
 /** $\dollar$Fixed(timeout: 10) */
 export async function foo(event) {
   const id = event.id
@@ -263,6 +262,85 @@ functions:
 % ----------------------------------------------------------
 % FIXED EXAMPLE
 % ----------------------------------------------------------
+
+\subsubsection{\$TrackMetrics}
+\annotation{\$TrackMetrics(namespace: string, metricName: string, metricValue?: ts.Expression)}
+generates code that monitors and logs the functions’ resource usage
+by also importing the necessary dependencies, i.e., for \textit{AWS Lambda}
+it uses and injects the \textit{CloudWatch} dependency.
+These are the required properties:
+\begin{itemize}
+  \item The function declaration must be \verb|async|.
+    Preceding this annotation with \annotation{\$Fixed} makes it automatically \verb|async|.
+  \item \verb|namespace| and \verb|metricName| are mandatory strings.
+    The former represents the namespace instantiated on the cloud through \textit{AWS}.
+  \item The third parameter, if present, must be the same as one of the variables' identifiers.
+\end{itemize}
+
+An example should be more explicative:
+% ----------------------------------------------------------
+% TRACK EXAMPLE
+% ----------------------------------------------------------
+\begin{lstlisting}[language=javascript, caption={Input code for \annotation{$\dollar$TrackMetrics}}]
+import { query } from '../local'
+
+/**
+ * $\dollar$TrackMetrics(namespace: 'shop', metricName: 'sell', metricValue: size)
+ */
+export async function processOrder(id) {
+  const order = await query(id)
+  const size = order.size
+  // ...more logic...
+  return size
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=javascript, caption={Output code from \annotation{$\dollar$TrackMetrics}}, label={lst:out-track}]
+import { query } from '../local'
+import { CloudWatch } from 'aws-sdk'
+
+/**
+ * $\dollar$TrackMetrics(namespace: 'shop', metricName: 'sell', metricValue: size)
+ */
+export async function processOrder(id) {
+  const order = await query(id)
+  const size = order.size
+  await new CloudWatch()
+    .putMetricData({
+      Namespace: 'shop',
+      MetricData: [
+        {
+          MetricName: 'sell',
+          Timestamp: new Date(),
+          Value: size,
+        },
+      ],
+    })
+    .promise()
+  // ...more logic...
+  return size
+}
+\end{lstlisting}
+% ----------------------------------------------------------
+% TRACK EXAMPLE
+% ----------------------------------------------------------
+
+Listing \ref{lst:out-track} shows the generated boilerplate to enable logs inside the function,
+and a new import statement added at the top of the file.
+\annotation{\$TrackMetrics} puts the code in a context-aware manner, hence,
+it is placed after the variable declared as the third argument.
+
+Supposing a typographical error was written instead of \verb|size|, the following error message would appear:
+\begin{lstlisting}[language=console]
+'$\dollar$TrackMetrics' can only receive an identifier as
+a value for the 'metricValue' parameter like
+'id' | 'order' | 'size'
+in function 'processOrder' defined here:
+--> input/source.ts:6
+\end{lstlisting}
+
+
 
 \subsection{Custom Annotations}
 
