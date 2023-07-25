@@ -174,8 +174,8 @@ to facilitate this process, each source file may be visited multiple times.
 
 \subsection{Core Annotations}
 
-\f{} offers four core annotations which generate code and/or metadata.
-Their transformers can handle code manipulation, deployment metadata, or a combination of both functionalities:
+\f{} offers four core annotations whose transformers can handle code manipulation,
+deployment metadata, or a combination of both functionalities:
 by pipelining annotations, we can effectively utilize the strengths of different approaches.
 
 \begin{table}[htbp]
@@ -192,6 +192,77 @@ by pipelining annotations, we can effectively utilize the strengths of different
         \bottomrule
     \end{tabular}
 \end{table}
+
+\subsubsection{\$Fixed}
+\annotation{\$Fixed(memorySize?: number, timeout?: number, ...)}
+converts monolithic functions into \textbf{fixed}-size serverless functions,
+whose resources are statically determined and remain constant regardless of the workload or input size.
+To achieve this conversion, code is handled as follows:
+\begin{itemize}
+  \item The monolithic functions' parameters are mapped to a single \verb|event|
+    parameter in order to adhere to \textit{AWS Lambda} serverless functions' signature.
+  \item The monolithic functions' return statements change to match
+    the shape of the response expected by the platform,
+    by creating an object with a status code (\verb|200|)
+    and a body that contains a serialized version of the initially returned value.
+  \item Early return statements and throw statements are modified similarly,
+    but the status code represents a client error (\verb|400|).
+\end{itemize}
+
+\annotation{\$Fixed} has no mandatory parameters, however, all the specified arguments will be
+passed as metadata for the function deployment.
+
+% ----------------------------------------------------------
+% FIXED EXAMPLE
+% ----------------------------------------------------------
+
+\begin{lstlisting}[language=javascript, caption={Input code}]
+/** $\dollar$Fixed(timeout: 10) */
+export async function foo(id) {
+  if (!isValid(id)) {
+    throw new Error('Something went wrong')
+  }
+
+  const data = await query()
+
+  return data
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=javascript, caption={Output code}]
+/** $\dollar$Fixed(timeout: 10) */
+export async function foo(event) {
+  const id = event.id
+
+  if (!isValid(id)) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        error: "'Something went wrong'",
+      }),
+    }
+  }
+
+  const data = await query()
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(data),
+  }
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=yaml, caption={Generated Metadata through \annotation{$\dollar$Fixed}}]
+# Generated metadata
+functions:
+  foo:
+    handler: output/source.foo
+  timeout: 10 # default is 6 seconds
+\end{lstlisting}
+% ----------------------------------------------------------
+% FIXED EXAMPLE
+% ----------------------------------------------------------
 
 \subsection{Custom Annotations}
 

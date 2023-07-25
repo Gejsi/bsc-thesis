@@ -11,6 +11,9 @@
 \usepackage{hhline}
 \usepackage{amsmath}
 \usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{eqparbox}
 
 % copyrighting
 \usepackage{hyperxmp}
@@ -154,9 +157,9 @@ version={4.0},
          {9}{{{\color{numb}9}}}{1}
 }
 
-\newcommand\YAMLcolonstyle{\bfseries}
-\newcommand\YAMLkeystyle{\ttfamily}
-\newcommand\YAMLvaluestyle{\mdseries}
+\newcommand\YAMLcolonstyle{\color{red}\mdseries}
+\newcommand\YAMLkeystyle{\color{black}}
+\newcommand\YAMLvaluestyle{\color{blue}\mdseries}
 \newcommand{\annotation}[1]{{\color{purple}\texttt{#1}}}
 
 \makeatletter
@@ -167,18 +170,21 @@ version={4.0},
 \expandafter{\language@yaml}
 {
   keywords={true,false,null,y,n},
-  keywordstyle=\upshape\bfseries,
-  basicstyle=\YAMLkeystyle,                                 % assuming a key comes first
+  keywordstyle=\color{darkgray}\bfseries,
+  basicstyle=\ttfamily\footnotesize\YAMLkeystyle,                                 % assuming a key comes first
   sensitive=false,
   comment=[l]{\#},
   morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
   stringstyle=\YAMLvaluestyle\ttfamily,
+  moredelim=[l][\color{orange}]{\&},
+  moredelim=[l][\color{magenta}]{*},
   moredelim=**[il][\YAMLcolonstyle{:}\YAMLvaluestyle]{:},   % switch to value style at :
   morestring=[b]',
   morestring=[b]",
   literate =    {---}{{\ProcessThreeDashes}}3
-                {>}{{\bfseries\textgreater}}1     
-                {|}{{\bfseries\textbar}}1 
+                {>}{{\textcolor{red}\textgreater}}1     
+                {|}{{\textcolor{red}\textbar}}1 
                 {\ -\ }{{\mdseries\ -\ }}3,
 }
 
