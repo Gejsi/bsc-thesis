@@ -53,7 +53,7 @@ the incremental adoption of the serverless paradigm.
 
 \f{} requires a configuration file that must be named \verb|fenrir.config.json| to understand where to operate:
 
-\begin{lstlisting}[language=json]
+\begin{lstlisting}[language=json, caption={\f{} configuration}]
 {
   "files": ["input/source.ts"],
   "serverlessConfigPath": "input/serverless.yml",
@@ -253,7 +253,6 @@ export async function foo(event) {
 \end{lstlisting}
 
 \begin{lstlisting}[language=yaml, caption={Generated Metadata through \annotation{$\dollar$Fixed}}]
-# Generated metadata
 functions:
   foo:
     handler: output/source.foo
@@ -327,9 +326,9 @@ export async function processOrder(id) {
 % ----------------------------------------------------------
 
 Listing \ref{lst:out-track} shows the generated boilerplate to enable logs inside the function,
-and a new import statement added at the top of the file.
-\annotation{\$TrackMetrics} puts the code in a context-aware manner, hence,
-it is placed after the variable declared as the third argument.
+and an additional import statement is included at the top of the file to address its previous absence.
+\annotation{\$TrackMetrics} puts the code in a context-aware manner,
+placing it after the variable declared as \verb|metricValue|.
 
 Supposing a typographical error was written instead of \verb|size|, the following error message would appear:
 \begin{lstlisting}[language=console]
@@ -340,11 +339,147 @@ in function 'processOrder' defined here:
 --> input/source.ts:6
 \end{lstlisting}
 
+\subsubsection{\$HttpApi}
+\annotation{\$HttpApi(method: string, path: string, ...)}
+generates the metadata needed to make the function available as an HTTP endpoint.
+\begin{itemize}
+  \item The \verb|method| parameter represents the desired HTTP method (\verb|GET|, \verb|POST|, etc...).
+  \item The \verb|path| parameter represents the URL path where the function will be available.
+  \item The optional parameters are meant to customize the behavior of the HTTP endpoint further,
+     for example, by setting up Cross-Origin Resource Sharing (CORS) headers.
+\end{itemize}
+% ----------------------------------------------------------
+% Http EXAMPLE
+% ----------------------------------------------------------
+\begin{multicols}{2}[\columnsep=1cm]
+\begin{lstlisting}[language=javascript]
+/**
+ * $\dollar$HttpApi(method: "POST", path: "/users/create")
+ * $\dollar$HttpApi(method: "PUT", path: "/users/update")
+ */
+export function foo() {}
+\end{lstlisting}
 
+\columnbreak
+
+\begin{lstlisting}[language=yaml]
+foo:
+  handler: output/source.foo
+  events:
+    - httpApi:
+        method: POST
+        path: /users/create
+    - httpApi:
+        method: PUT
+        path: /users/update
+\end{lstlisting}
+\end{multicols}
+% ----------------------------------------------------------
+% Http EXAMPLE
+% ----------------------------------------------------------
+
+\subsubsection{\$Scheduled}
+\annotation{\$Scheduled(rate: string, ...)}
+generates the metadata needed to make the function run at specific dates or periodic intervals.
+\begin{itemize}
+  \item The \verb|rate| parameter is a rate or cron expression
+    which schedules when the function should be triggered.
+  \item The optional parameters are meant to customize the behavior of the scheduled event further,
+     for example, by specifying multiple schedule expressions and giving it a description.
+\end{itemize}
+% ----------------------------------------------------------
+% Scheduled EXAMPLE
+% ----------------------------------------------------------
+\begin{multicols}{2}[\columnsep=2cm]
+\begin{lstlisting}[language=javascript]
+/**
+ * $\dollar$Scheduled(rate: "rate(2 hours)")
+ */
+export function foo() {}
+\end{lstlisting}
+\columnbreak
+
+\begin{lstlisting}[language=yaml]
+foo:
+  handler: output/source.foo
+  events:
+    - schedule:
+        rate: rate(2 hours)
+\end{lstlisting}
+\end{multicols}
+% ----------------------------------------------------------
+% Scheduled EXAMPLE
+% ----------------------------------------------------------
 
 \subsection{Custom Annotations}
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+\f{} isn't bound to its core annotations, as it endorses the creation of new ones
+to fit custom requirements and usages.
+
+In order to inform \f{} on the new annotation name and its transformer implementation,
+the configuration file (i.e., \verb|fernrir.config.json|) must be updated:
+\begin{lstlisting}[language=json]
+{
+  ...
+  "annotations": {
+    "IoT": "annotations/iot-impl.ts"
+  }
+}
+\end{lstlisting}
+
+\f{} encourages strict type-safety by offering a type definition for custom transformers:
+\begin{lstlisting}[language=javascript, caption={Custom transformer for a new \annotation{$\dollar$IoT} annotation.}, label={lst:custom-transformer}]
+// in 'annotations/iot-impl.ts'
+import type { CustomTransformer } from 'fenrir-core'
+
+type IotTransfomer = CustomTransformer<'IoT', { sql: string }>
+
+const transformer: IotTransfomer = (
+  node,
+  context,
+  annotation
+) => {
+  // ...implementation...
+}
+
+// custom transformers must be exported as `default`
+export default transformer
+\end{lstlisting}
+
+Analyzing custom transformers' signature also provides insights on how
+core annotations are implemented, since their definitions are almost identical.
+
+The \verb|node| argument represents the function declaration in the AST which was marked with the annotation.
+It contains all the relevant information associated with this type of AST node,
+including the function's body, name, parameters, and other relevant details.
+
+The \verb|context| argument represents the \textit{TypeScript} transformation context,
+which is a very powerful object containing:
+\begin{itemize}
+  \item Methods for source code manipulations, such as\\\verb|context.factory.updateIfStatement()|.
+  \item The typechecker, which is an essential module integrated in \textit{TypeScript}, useful for working with symbols:
+    it has access to every type of each node and details about the project dependencies.
+  \item Miscellaneous methods to handle lexical environments and compiler options.
+  \item \f{} utilities that facilitate the development of transformers and of metadata handling.
+\end{itemize}
+
+The \verb|annotation| argument is an object containing the annotation name
+and a record of all the arguments passed to it.
+Its type definition is inferred from the previously established \verb|CustomTransformer| schema.
+
+A transformer's return type can be omitted as it is inferred, however,
+if it is manifested to provide a stricter signature, it is restricted to this subset:
+\begin{lstlisting}[language=javascript, numbers=none]
+type TransformerReturnType =
+  | ts.SourceFile
+  | ts.FunctionDeclaration
+  | undefined
+  | void
+\end{lstlisting}
+Hence, transformers may perform three types of tasks:
+modifying the entire source file, which is useful for updating import declarations,
+altering the function itself,
+or solely modifying the metadata without changing the source code.
 
 \section{Emit}
 
