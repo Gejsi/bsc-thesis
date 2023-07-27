@@ -7,7 +7,6 @@ by showing real-world examples with extensive usage of its features.
 Furthermore, since we are creating an open-source project, the structure of
 the repository will also be analyzed.
 
-
 \section{Overview}
 
 \f{} is a transpiler which enhances serverless programming by introducing the concept of annotations.
@@ -477,11 +476,58 @@ type TransformerReturnType =
   | void
 \end{lstlisting}
 Hence, transformers may perform three types of tasks:
-modifying the entire source file, which is useful for updating import declarations,
+modifying the entire source file, which is useful for updating import declarations or other AST nodes,
 altering the function itself,
 or solely modifying the metadata without changing the source code.
 
+% Magari parlare della gestione degli errori. E poi dell'emit.
+% E di come gli argomenti sono trattati.
+
 \section{Emit}
 
-Magari parlare della gestione degli errori. E poi dell'emit.
-E di come gli argomenti sono trattati.
+The last step of \f{}'s pipeline involves emitting the transformed files and metadata.
+Files are ejected in a single output folder,
+with the default name being \textit{functions}: it is important to give it an insightful name,
+since, users are encouraged to review and potentially modify the emitted code
+if they aren't satisfied with the transformations.
+
+The transformed code may not look as the input code, as it is formatted
+through an opinionated set of conventions which imposes properties like
+the usage of semicolons or the number of spaces:
+in order to make it adhere to personal formatting preferences,
+users should use popular tools such as \textit{ESLint} and \textit{Prettier}.
+
+Generated metadata is appended to a \verb|serverless.yml| placed at the project root,
+and through the \textit{SLS} CLI it may be deployed to the serverless platform.
+
+\subsection{Error handling}
+
+\f{} tries to provide as many informations as it can when it errors.
+
+Configuration mistakes cause the program to panic, for example:
+\begin{lstlisting}[language=console]
+Since you are providing a list of files, a `serverless.yml` must
+be provided to the transpiler to generate the needed metadata.
+\end{lstlisting}
+
+Annotations syntax errors provide another set of logs:
+\begin{lstlisting}[language=console]
+$\dollar$Schdle
+ ^^^^^^
+ Unknown annotation name
+
+$\dollar$Scheduled(
+          ^
+          Invalid bracket
+
+$\dollar$Fixed(foo)
+      ^^^^^
+      Invalid syntax for annotation parameters
+\end{lstlisting}
+
+Transformers can also cause specific errors, such as:
+\begin{lstlisting}[language=console]
+'$\dollar$HttpApi' must receive both 'method' and 'path' as parameters
+in function 'foo' defined here:
+--> input/source.ts:6
+\end{lstlisting}
