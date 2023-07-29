@@ -1,11 +1,13 @@
 \chapter{Implementation}
 \label{chap:implementation}
 
-This chapter presents an in-depth description of how \f{} works
-and demonstrates how much it can simplify developers' experience
-by showing real-world examples with extensive usage of its features.
-Furthermore, since we are creating an open-source project, the structure of
-the repository will also be analyzed.
+This chapter presents an in-depth description of how \f{} operates
+by reviewing each step of its compilation process and analyzing
+the concept of annotations which represent the foundation of this framework.
+Moreover, it presents practical use cases to demonstrate
+how much it can simplify developers' experience
+by allowing them to focus on the core logic of their applications
+while effortlessly benefiting from the serverless paradigm.
 
 \section{Overview}
 
@@ -40,9 +42,110 @@ It is important to notice that \f{} doesn't lock developers in managing their
 functions only through its tools, instead, its primary objective is to facilitate
 the incremental adoption of the serverless paradigm.
 
-% \subsection{Brief example: Monolith to Serverless conversion}
+\subsection{Brief example: Monolith to Serverless conversion}
 
-% Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+In Listing~\ref{lst:source}, we show an example of a monolithic codebase with a
+pair of illustrative functions. One function, called \verb|processOrder|,
+retrieves orders (e.g., via a database query). The other function, called
+\verb|generateReport|, produces reports based on the retrieved orders. Since
+we want the \verb|processOrder| function to be invocable from clients, we
+annotate it as \annotation{\$Fixed}, and we specify its HTTP endpoint and method
+with the \annotation{\$HttpApi} annotation. The \verb|generateReport| function
+is instead a backend one, which we want to run at pre-established intervals: to
+obtain this behavior, we use the \annotation{\$Scheduled} annotation to specify
+that it shall be run every two hours.
+All these annotations will be explored in detail in \autoref{sec:annotations}.
+Using Fenrir, we translate the code of Listing~\ref{lst:source} into the
+serverless codebase of Listings~\ref{lst:processOrder}--~\ref{lst:yaml}.
+
+\begin{lstlisting}[language=javascript, caption={Source Code.}, label=lst:source]
+/**
+ * $\dollar$Fixed
+ * $\dollar$HttpApi(method: "GET", path: "/orders/report")
+ */
+export async function processOrder(orderId) {
+  // ... processing logic ...
+  console.log(`Processing order $\dollar${orderId}`)
+  return order
+}
+/** $\dollar$Scheduled(rate: "2 hours") */
+export async function generateReport() {
+  // get the processed data and generate report
+  console.log("Generating report")
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=javascript, caption={Generated Code.}, label=lst:processOrder]
+export async function processOrder(event) {
+  const orderId = event.orderId
+  // ... processing logic ...
+  console.log(`Processing order $\dollar${orderId}`)
+  return {
+    statusCode: 200,
+    body: JSON.stringify(order),
+  }
+}
+// The implementation of `generateReport`
+// is omitted as it remains unchanged.
+\end{lstlisting}
+
+\begin{minipage}{\textwidth}
+\begin{minipage}[t]{.5\textwidth}
+\begin{lstlisting}[language=yaml]
+processOrder:
+  handler: output.processOrder 
+  events:
+    - httpApi: 
+      method: GET
+      path: /orders/report
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}[t]{.5\textwidth}
+\begin{lstlisting}[language=yaml,firstnumber=last]
+generateReport:
+  handler: output.generateReport
+  events:
+    - schedule:
+        rate: 2 hours
+\end{lstlisting}
+\end{minipage}
+\captionof{lstlisting}{\label{lst:yaml}Generated deployment configuration.}
+\end{minipage}
+
+The generated code includes both the \verb|processOrder| and \verb|generateReport| functions ready to
+be deployed on the serverless platform. In particular, notice that the input of
+\verb|processOrder| changed to match the expected signature for functions of
+the serverless platform, i.e., an \verb|event| that carries, among other
+content, the invocation parameters of the function, which are automatically
+assigned to local counterparts at the beginning of the function body.
+Complementarily, we also find the return value changed to match the shape of the
+response expected by the platform---at lines 5--8 of
+Listing~\ref{lst:processOrder}, we create a JSON object with a status code and a
+body that contains a serialized version of the value held by the variable
+\verb|order|, which holds the value returned by the function in the source
+codebase.
+The other notable element in the YAML code found in
+Listing~\ref{lst:yaml}, which contains the information that the serverless
+platform needs to deploy the two functions, e.g., the type of invocation for the
+\verb|processOrder| function (HTTP) and its invocation address and the call
+schedule of the \verb|generateReport| function.
+
+This brief example introduces features that will be thoroughly reviewed,
+but it doesn't contain any real logic.
+A non-trivial example, named \textit{Hati}\footnote{In Norse mythology, Fenrir has two sons, Hati and Sköll.},
+is present in the \f{} public repository, yet, it is omitted from this document due to its size.
+
+\textit{Hati} converts a monolithic email message analysis app,
+into an event-driven serverless pipeline where each function
+has the same core logic as the monolithic counterpart, but they are manipulated to have
+all the benefits offered by the serverless paradigm.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{diagrams/hati}
+  \caption{\textit{Hati}'s pipeline.}
+  \label{fig:hati}
+\end{figure}
 
 % \section{Detailed review}
 
@@ -119,6 +222,7 @@ The processed functions have their annotations examined, and
 their bodies are visited to handle AST transformations.
 
 \section{Annotations}
+\label{sec:annotations}
 
 Annotations are syntactical units, or keywords, enclosed within JSDoc comments,
 each associated with their respective transformer.
@@ -126,7 +230,7 @@ They can be expressed using a BNF-like syntax:
 \begin{equation*}
 \begin{aligned}
     \text{Annotation} & ::= "\$" \langle \text{Name} \rangle [ "(" \langle \text{Parameters} \rangle ")" ] \\
-    \text{Name} & ::= [\text{a-zA-Z\_}][\text{a-zA-Z0-9\_}]* \\
+    \text{Name} & ::= [\text{a-zA-Z0-9\_}]+ \\
     \text{Parameters} & ::= \langle \text{TypeScriptObject} \rangle \\
     \text{TypeScriptObject} & ::= \dots \\
 \end{aligned}
@@ -520,8 +624,8 @@ $\dollar$Scheduled(
           ^
           Invalid bracket
 
-$\dollar$Fixed(foo)
-      ^^^^^
+$\dollar$Fixed(foo: )
+      ^^^^^^^
       Invalid syntax for annotation parameters
 \end{lstlisting}
 
