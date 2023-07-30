@@ -1,11 +1,51 @@
 \chapter{Background}
 \label{chap:background}
 
-Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident. Nostrud officia pariatur ut officia. Sit irure elit esse ea nulla sunt ex occaecat reprehenderit commodo officia dolor Lorem duis laboris cupidatat officia voluptate. Culpa proident adipisicing id nulla nisi laboris ex in Lorem sunt duis officia eiusmod. Aliqua reprehenderit commodo ex non excepteur duis sunt velit enim. Voluptate laboris sint cupidatat ullamco ut ea consectetur et est culpa et culpa duis.
+Before introducing the serverless paradigm,
+we must understand what is cloud computing\cite{nist}.
+Despite its modern connotations, cloud computing
+isn't a novel concept, in fact, its principles have been established
+several decades ago: in essence, cloud computing
+runs different types of workloads within clouds, which are environments that abstract, pool,
+and share scalable resources across distributed networks.
+Thus, users are offered on-demand availability of computing power by a third-party provider,
+without the problems associated with direct active management of IT infrastructures.
 
-\section{Serverless architectures}
+\section{Cloud services}
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+Cloud computing is supplied as a collection of service models,
+hence, users can arrange different abstraction layers based on their necessities.
+
+\begin{enumerate}
+  \item Infrastructure as a service (IaaS): these are the most low-level services that can be provided,
+    like bare metal servers, storage, virtual machines, load balancers, etc.
+  \item Platform as a service (PaaS): an entire toolkit or development environment
+    made for scaling applications without thinking about the underlying infrastructure.
+    PaaS vendors may offer programming languages execution environments, databases,
+    web servers and many more technologies.
+  \item Software as a service (SaaS): this model is in direct contact with the end-user,
+    as it refers to the application software standing on top of the platforms and infrastructure.
+    Cloud users, such as people using mobile phones, access the software through a subscription fee,
+    without even needing to install it because it is already supported and balanced through
+    the previously mentioned layers.
+\end{enumerate}
+
+Most recently, a new model has appeared, named FaaS--Function as a service,
+delivering a cloud platform that offers computing runtimes with support for serverless architectures.
+
+\section{Serverless computing}
+
+Serverless computing was born due to a very pragmatic reason:
+workloads in modern applications need to be efficiently managed
+because they are highly dynamic, meaning that, some software parts
+need more computing resources than the others and this aspect may vary frequently.
+In traditional monoliths, or even microservices, developers are concerned
+with capacity planning, configurations, management, fault tolerance, and
+scaling containers, VMs or physical servers.
+
+Serverless architectures abstract way all these inconveniences
+by allowing developers to focus solely on writing application logic,
+and letting the FaaS vendor to handle the burden of provisioning and scaling infrastructures.
 
 \subsection{Platform providers}
 
@@ -17,4 +57,4 @@ Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint 
 
 \subsection{TypeScript}
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+Lorem ipsum dolor sit amet, qui minim labore adipisicing minim
