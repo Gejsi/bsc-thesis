@@ -16,8 +16,8 @@ Annotations are an abstraction layer that the developers can unobtrusively use
 to apply code transformations and metadata generation to a given application,
 which will be deployed to a serverless platform.
 
-To achieve this goal, we used the \textit{TypeScript}\cite{ts} compiler API which lets us
-manipulate sources with ease, and \textit{SLS}\cite{sls} which
+To achieve this goal, we used the \textit{TypeScript}~\cite{ts} compiler API which lets us
+manipulate sources with ease, and \textit{SLS}~\cite{sls} which
 uses the generated metadata to deploy to \textit{AWS Lambda}.
 
 \begin{figure}[H]
@@ -38,7 +38,7 @@ and the related metadata is also appended to a
 \verb|serverless.yml| file which specifies function deployment
 properties (e.g., the address to invoke a given function).
 
-It is important to notice that \f{} doesn't lock developers in managing their
+It is important to notice that \f{} does not lock developers in managing their
 functions only through its tools, instead, its primary objective is to facilitate
 the incremental adoption of the serverless paradigm.
 
@@ -54,8 +54,8 @@ with the \annotation{\$HttpApi} annotation. The \verb|generateReport| function
 is instead a backend one, which we want to run at pre-established intervals: to
 obtain this behavior, we use the \annotation{\$Scheduled} annotation to specify
 that it shall be run every two hours.
-All these annotations will be explored in detail in \autoref{sec:annotations}.
-Using Fenrir, we translate the code of Listing~\ref{lst:source} into the
+All these annotations are explored in detail in \cref{sec:annotations}.
+Using \f{}, we translate the code of Listing~\ref{lst:source} into the
 serverless codebase of Listings~\ref{lst:processOrder}--~\ref{lst:yaml}.
 
 \begin{lstlisting}[language=javascript, caption={Source Code.}, label=lst:source]
@@ -130,12 +130,12 @@ platform needs to deploy the two functions, e.g., the type of invocation for the
 \verb|processOrder| function (HTTP) and its invocation address and the call
 schedule of the \verb|generateReport| function.
 
-This brief example introduces features that will be thoroughly reviewed,
-but it doesn't contain any real logic.
+This brief example introduces features that will be thoroughly described,
+but it does not contain any real logic.
 A non-trivial example, named \textit{Hati}\footnote{In Norse mythology, Fenrir has two sons, Hati and Sköll.},
-is present in the \f{} public repository, yet, it is omitted from this document due to its size.
+is present in the \f{} public repository, yet, it is omitted from this thesis due to its size.
 
-\textit{Hati} converts a monolithic email message analysis app,
+\textit{Hati} converts a monolithic email message analysis program,
 into an event-driven serverless pipeline where each function
 has the same core logic as the monolithic counterpart, but they are manipulated to have
 all the benefits offered by the serverless paradigm.
@@ -235,8 +235,8 @@ They can be expressed using a BNF-like syntax:
     \text{TypeScriptObject} & ::= \dots \\
 \end{aligned}
 \end{equation*}
-This representation does not intend to provide a formal and precise depiction of the syntax of annotations.
-Nevertheless, it serves to offer a general impression of how they can be written within the code.
+This representation does not intend to provide a formal and complete definition of the syntax of annotations.
+Nevertheless, it serves to offer a general intuition of how they can be written within the code.
 \begin{lstlisting}[language=javascript, caption={Generic examples of annotation.}, label={lst:annotations-examples}]
 /** $\dollar$Foo */
 
@@ -257,15 +257,15 @@ Nevertheless, it serves to offer a general impression of how they can be written
  */
 \end{lstlisting}
 
-Annotations are designed to avoid cluttering \textit{JavaScript} with new syntax,
+Annotations are designed to avoid cluttering \textit{JavaScript} code with new syntax,
 as they can only be written inside JSDoc comments.
-Thus, they serve a dual-purpose by not only providing functionality
-but also serving as supplementary documentation for the codebase.
+Thus, they serve a dual-purpose, they provide the functionality needed by \f{},
+and they also serve as supplementary documentation for the codebase.
 
 Listing \ref{lst:annotations-examples} provides a valuable insight on how annotations
 may be parameterized to modify transformers' functionality.
 In fact, arguments undergo parsing as a \textit{TypeScript} object literal,
-hence, they are as powerful as regular objects\cite{mdn_objects}
+hence, they are as powerful as regular objects~\cite{mdn_objects}
 meaning that even complex structures (arrays, functions, etc...) can be used
 during the compilation step to enrich transformations.
 
@@ -278,7 +278,7 @@ to facilitate this process, each source file may be visited multiple times.
 \subsection{Core Annotations}
 
 \f{} offers four core annotations whose transformers can handle code manipulation,
-deployment metadata, or a combination of both functionalities:
+deployment metadata or a combination of both functionalities:
 by pipelining annotations, we can effectively utilize the strengths of different approaches.
 
 \begin{table}[htbp]
@@ -379,7 +379,7 @@ These are the required properties:
   \item The third parameter, if present, must be the same as one of the variables' identifiers.
 \end{itemize}
 
-An example should be more explicative:
+We complete the explanation with an example:
 % ----------------------------------------------------------
 % TRACK EXAMPLE
 % ----------------------------------------------------------
@@ -516,10 +516,10 @@ foo:
 
 \subsection{Custom Annotations}
 
-\f{} isn't bound to its core annotations, as it endorses the creation of new ones
+\f{} is not bound to its core annotations, as it endorses the creation of new ones
 to fit custom requirements and usages.
 
-In order to inform \f{} on the new annotation name and its transformer implementation,
+In order to inform \f{} of the new annotation name and its transformer implementation,
 the configuration file (i.e., \verb|fernrir.config.json|) must be updated:
 \begin{lstlisting}[language=json]
 {
@@ -606,7 +606,7 @@ and through the \textit{SLS} CLI it may be deployed to the serverless platform.
 
 \subsection{Error handling}
 
-\f{} tries to provide as many informations as it can when it errors.
+\f{} tries to provide as many informations as it can when it meets errors.
 
 Configuration mistakes cause the program to panic, for example:
 \begin{lstlisting}[language=console]
@@ -629,7 +629,7 @@ $\dollar$Fixed(foo: )
       Invalid syntax for annotation parameters
 \end{lstlisting}
 
-Transformers can also cause specific errors, such as:
+Transformers can also cause emit errors, such as:
 \begin{lstlisting}[language=console]
 '$\dollar$HttpApi' must receive both 'method' and 'path' as parameters
 in function 'foo' defined here:
