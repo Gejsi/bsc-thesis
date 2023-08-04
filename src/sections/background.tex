@@ -33,6 +33,10 @@ hence, users can arrange different abstraction layers based on their necessities
 Most recently, a new model has appeared, named FaaS--Function as a service,
 delivering a cloud platform that offers computing runtimes with support for serverless architectures.
 
+Furthermore, the serverless model is also encompassed as BaaS--Backend as a service,
+usually accessible via APIs, providing support for many technologies like serverless databases,
+but these services will not be examined in this thesis.
+
 \section{Serverless computing}
 
 Serverless computing was born due to a very pragmatic reason:
@@ -48,10 +52,24 @@ by allowing developers to focus solely on writing application logic,
 and letting the FaaS vendors to handle the burden of provisioning and scaling infrastructures.
 
 To achieve this goal, developers write the logic inside computational units
-called cloud functions, which are run in short-lived environments usually triggered by some kind of event.
+called cloud functions, which are run in short-lived environments triggered by some kind of event.
 Cloud functions recall the concept of programming languages functions,
 as they both associate an input to an output, and as a matter of fact, 
-cloud functions' logic is contained inside a programming languages' functions.
+cloud functions' logic is encapsulated inside the latter.
+Yet, cloud functions need to be considered as resources rather than instructions of code,
+as they are computing units invoked by the serverless provider and metered on-demand through an event-driven execution model,
+thus they can be written in different programming languages (e.g., \textit{Go}, \textit{Java}, \textit{JavaScript})
+as long as the vendor has adequate support for the language runtime.
+
+When the cloud function is triggered by an event such as
+HTTP requests, database changes, file uploads, or scheduled intervals,
+the FaaS provider runs the code
+after initializing an execution environment, which is a secure and isolated context
+that manages all the resources needed and the lifetime of the function.
+Execution environments are technically handled differently by the platform providers, for example,
+\textit{AWS Lambda} uses $\mu$VMs and \textit{IBM} uses \textit{Docker} containers,
+nonetheless they all offer lightweight sandboxed containers that are designed to
+have fast startup/shutdown times and minimal overhead.
 
 \subsection{Platform providers}
 
