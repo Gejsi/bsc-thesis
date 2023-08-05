@@ -75,19 +75,26 @@ have fast startup/shutdown times and minimal overhead due to their virtualized n
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{diagrams/lambda.png}
-  \caption{Lambda execution environment lifecycle.}
-  \label{fig:pipeline}
+  \caption{Serverless function lifecycle in an execution environment.}
+  \label{fig:serverless-functions-lifecycle}
 \end{figure}
 
 \subsection{Serverless principles}
 
-Serverless is a misnomer, since servers are still in the picture
+Serverless is a misnomer, since servers are still in the picture,
 this computing model must not be confused with other paradigms
-that do not require an actual server such as peer-to-peer (P2P).
+that do not require an actual server such as peer-to-peer (P2P)~\cite{serverless-wikipedia}.
 Instead, it is more accurate to interpret it as "less-server",
 therefore emphasizing the shift in architectural responsibility from developers actively
 managing server infrastructure to entrusting platform providers to manage the underlying server complexities.
 
+Figure~\ref{fig:serverless-functions-lifecycle} shows that serverless functions
+are ephemeral, so they are designed to have a temporary nature, and consequently
+stateless, so there is no stored information of previous transactions, as they are constructed
+from scratch each time they are instantiated.
+These behaviors have several implications that may offer advantages and disadvantages.
+
+\subsubsection{Serverless architectures benefits}
 
 \subsection{Platform providers}
 
