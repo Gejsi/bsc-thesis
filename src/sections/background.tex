@@ -26,7 +26,7 @@ hence, users can arrange different abstraction layers based on their necessities
   \item Software as a service (SaaS): this model is in direct contact with the end-user,
     as it refers to the application software standing on top of the platforms and infrastructure.
     Cloud users, such as people using mobile phones, access the software through a subscription fee,
-    without even needing to install it because it is already supported and balanced through
+    without ever needing to install anything because the application is built on top of and balanced through
     the previously mentioned layers.
 \end{enumerate}
 
@@ -59,17 +59,35 @@ cloud functions' logic is encapsulated inside the latter.
 Yet, cloud functions need to be considered as resources rather than instructions of code,
 as they are computing units invoked by the serverless provider and metered on-demand through an event-driven execution model,
 thus they can be written in different programming languages (e.g., \textit{Go}, \textit{Java}, \textit{JavaScript})
-as long as the vendor has adequate support for the language runtime.
+as long as the chosen vendor has adequate support for the language runtime.
 
 When the cloud function is triggered by an event such as
-HTTP requests, database changes, file uploads, or scheduled intervals,
+HTTP requests, database changes, file uploads, scheduled intervals or various other triggers,
 the FaaS provider runs the code
 after initializing an execution environment, which is a secure and isolated context
-that manages all the resources needed and the lifetime of the function.
+that manages all the resources needed for the function lifecycle.
 Execution environments are technically handled differently by the platform providers, for example,
-\textit{AWS Lambda} uses $\mu$VMs and \textit{IBM} uses \textit{Docker} containers,
-nonetheless they all offer lightweight sandboxed containers that are designed to
-have fast startup/shutdown times and minimal overhead.
+\textit{AWS Lambda} uses $\mu$VMs while \textit{IBM} uses \textit{Docker} containers,
+nonetheless they all offer lightweight sandboxed containers designed to
+have fast startup/shutdown times and minimal overhead due to their virtualized nature.
+
+% TODO: replace this image
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{diagrams/lambda.png}
+  \caption{Lambda execution environment lifecycle.}
+  \label{fig:pipeline}
+\end{figure}
+
+\subsection{Serverless principles}
+
+Serverless is a misnomer, since servers are still in the picture
+this computing model must not be confused with other paradigms
+that do not require an actual server such as peer-to-peer (P2P).
+Instead, it is more accurate to interpret it as "less-server",
+therefore emphasizing the shift in architectural responsibility from developers actively
+managing server infrastructure to entrusting platform providers to manage the underlying server complexities.
+
 
 \subsection{Platform providers}
 
