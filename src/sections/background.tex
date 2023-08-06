@@ -2,7 +2,7 @@
 \label{chap:background}
 
 Before introducing the serverless paradigm,
-we must understand what is cloud computing\cite{nist}.
+we must understand what is cloud computing~\cite{nist}.
 Despite its modern connotations, cloud computing
 isn't a novel concept, in fact, its principles have been established
 several decades ago: in essence, cloud computing
@@ -96,9 +96,76 @@ These behaviors have several implications that may offer advantages and disadvan
 
 \subsubsection{Serverless architectures benefits}
 
-\subsection{Platform providers}
+\paragraph{\textbf{Reduced costs}} Serverless at its core gives immediate
+business value to its users, because it outsources servers management
+to a vendor, also allowing for economies of scale to take place, as discussed in \cite{berkeley}.
+Operational expenses decrease significantly, and development costs are optimized
+since this cloud paradigm offers the most fine-grained billing model in which developers
+only pay for the actual functions' execution time and not for idle servers.
+
+\paragraph{\textbf{Elasticity}} The cloud provider is responsible for autoscaling the capacity
+on demand, hence resources are handled accordingly to accommodate the required load.
+For example, consider a web application with two HTTP endpoints, denoted as endpoint $A$ and endpoint $B$,
+where $A$ is frequently called while $B$ is very rarely requested.
+In a traditional monolith, the entire web app would need to manually be scaled
+to handle unpredictable load spikes of $A$ calls, and even in normal circumstances
+the costs would still be inefficiently allocated just to manage some occasional $B$ requests.
+By encapsulating their logic inside two different serverless functions,
+endpoint $A$ can be allocated more resources when it experiences high demand,
+while endpoint $B$ might cost almost zero due to its occasional requests.
+
+\paragraph{\textbf{Productivity}} Developers can focus solely on writing
+business logic. Exposing units of code only through an event-driven model simplifies back-end development,
+also alleviating the typical problems related to distributed systems (e.g., multithreading).
+Moreover, development becomes quicker as deploying is easier and updates are granular,
+thus increasing the agility of the team and rapid prototyping of new products.
+
+\paragraph{\textbf{High availability}} Thanks to the distributed nature of serverless computing,
+platform providers ensure fault tolerance by redirecting functions across healthy and available zones.
+Latency is also reduced by deploying functions geographically near the end-users.
+
+\paragraph{\textbf{Interoperability}} The serverless paradigm can be used in
+conjunction with code deployed in traditional styles,
+such as microservices or monoliths~\cite{serverless-wikipedia}.
+Therefore, this model can be incrementally adopted by large companies and benefit
+complex existing systems. Start-ups should prioritize following a pure serverless approach
+because of all the previously mentioned benefits.
+
+\subsubsection{Serverless architectures shortcomings}
+
+Serverless computing is not flawless, and some researchers \cite{two-steps-back}
+point out the limits that are inherent to this paradigm, which cannot be solved
+by updating the state of the art with tools like \f{} itself.
+
+\paragraph{\textbf{State management}} Considering that there is no server-state,
+the programming model needs to shift for developers, as numerous applications require
+storing data for future references.
+To limit this disadvantage, users may use:
+\begin{itemize}
+  \item Temporary data stores or distributed caches, like Redis.
+  \item Databases, both SQL or NoSQL, as long as the connections can be instantiated quickly.
+  \item Vendor-specific strategies, like \textit{AWS}' step functions or \textit{Azure}'s durable functions.
+\end{itemize}
+Also, the limited lifetime of serverless functions needs to be contemplated given that
+they are not designed to support long-running processes,
+and if misused they can become more costly than traditional solutions.
+
+\paragraph{\textbf{Cold starts}} Serverless functions startup times
+can be a crucial drawback for systems performance, as the overhead for
+allocating all the resources needed to run a function can cause significant
+delays. This well-known problem, named "cold start", is
+particularly emphasized with technologies requiring heavy runtimes, such as JVM-based languages.
+To avoid this constraint, platform providers usually wait some time
+before dismantling the container, keeping it in a so-called "warm" state,
+so they are able to run the code without all the initialization overhead:
+this approach is obviously more costly, but it dramatically improves performances.
+
+\paragraph{\textbf{Vendor lock-in}}
+
+\subsection{Serverless use cases}
 
 Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+Parlare anche del framework serverless
 
 \section{Server-side JavaScript}
 
