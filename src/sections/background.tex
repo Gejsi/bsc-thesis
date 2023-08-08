@@ -71,11 +71,10 @@ Execution environments are technically handled differently by the platform provi
 nonetheless they all offer lightweight sandboxed containers designed to
 have fast startup/shutdown times and minimal overhead due to their virtualized nature.
 
-% TODO: replace this image
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{diagrams/lambda.png}
-  \caption{Serverless function lifecycle in an execution environment.}
+  \includegraphics[width=\textwidth]{diagrams/lambda}
+  \caption{Serverless function lifecycle in a warm execution environment.}
   \label{fig:serverless-functions-lifecycle}
 \end{figure}
 
@@ -177,7 +176,7 @@ at the expense of self-hosting parts of the infrastructure.
 \paragraph{\textbf{Complex debugging}} Monitoring, tracing, logging, and debugging
 are harder in serverless environments because of their ephemeral and stateless nature.
 These limits originate from the fact that that cloud environments are difficult
-to simulate in local contexts, therefore techniques like integration testing become unpractical.
+to simulate in local contexts, therefore even techniques like integration testing become unpractical.
 Although entire functions can be timed, there is typically no
 ability to dig into more detail by attaching profilers, debuggers or APM tools \cite{debug}.
 
@@ -212,7 +211,7 @@ To simplify the development of serverless architectures even more,
 by the \textit{Serverless Framework} \cite{sls} (referred to as \textit{SLS} in this thesis):
 this framework streamlines the operational efforts by providing a simple abstraction layer
 that can deploy with ease to all major cloud providers by tweaking a few configuration details.
-Thus, \textit{SLS} helps in breaking the constraint of vendors lock-in, and it also brightens
+Thus, \textit{SLS} helps in breaking the shortcomings of vendors' control, and it also brightens
 the developer experience by extending workflows through CLI tools, debugging facilities and useful plugins.
 
 \section{Server-side JavaScript}
