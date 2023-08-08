@@ -135,7 +135,7 @@ because of all the previously mentioned benefits.
 
 Serverless computing is not flawless, and some researchers \cite{two-steps-back}
 point out the limits that are inherent to this paradigm, which cannot be solved
-by updating the state of the art with tools like \f{} itself.
+by updating the state of the art even with tools like \f{}.
 
 \paragraph{\textbf{State management}} Considering that there is no server-state,
 the programming model needs to shift for developers, as numerous applications require
@@ -169,10 +169,10 @@ often deeply integrated with their own private services,
 and as a result switching vendors means updating operational tools (deployment, monitoring, etc.),
 modifying the code to satisfy the new FaaS interfaces, and most importantly
 porting chunks of the architecture from one infrastructure to another.
-To circumvent this issue, programs should be created in platform-agnostic manner,
+To circumvent these issues, programs should be created in platform-agnostic manner,
 without relying too heavily on the third-party services offered by the platform provider.
 Moreover, serverless architectures can be achieved through open-source solutions
-at the expense of handling some parts of the infrastructure manually.
+at the expense of self-hosting parts of the infrastructure.
 
 \paragraph{\textbf{Complex debugging}} Monitoring, tracing, logging, and debugging
 are harder in serverless environments because of their ephemeral and stateless nature.
@@ -183,8 +183,37 @@ ability to dig into more detail by attaching profilers, debuggers or APM tools \
 
 \subsection{Serverless use cases}
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-Parlare anche del framework serverless
+A meta-analysis conducted by Eismann et al.~\cite{meta-analysis} reviewed
+89 real-world use cases of serverless architectures and studied their characteristics.
+Their findings provide insightful values on how this
+paradigm is being used and how well it performs:
+\begin{itemize}
+  \item \textit{AWS Lambda} is the most popular platform provider, taking up 80\% of the market share:
+    this is not surprising as they pioneered the most mature and well integrated set of services out of all
+    the cloud vendors.
+  \item \textit{JavaScript} and \textit{Python} are the most used
+    programming languages for cloud functions (each used by 32\% of the cases).
+    Most of these architectures depend on a wide variety of cloud services, with the most used
+    ones being cloud storage, cloud database, API gateway and cloud pub-sub.
+  \item Cost savings seem to be the strongest motivator for adopting serverless computing,
+    still, other driving factors are reduced operation effort, the scalability and performance gains.
+  \item The overall trend of serverless workloads is to feature unpredictable on-demand
+  workloads, typically triggered through lightweight (<1MB) HTTP requests.
+\end{itemize}
+
+The first two points also serve to understand how \f{} operates:
+we choose to compile \textit{JavaScript} codebases written following
+\textit{AWS Lambda}'s interfaces due to their ever-growing popularity.
+Furthermore, the meta-programming offered through \f{}'s annotations
+can be expanded to support different platform providers.
+
+To simplify the development of serverless architectures even more,
+\f{} not only manipulates source codes, but it also generates metadata used
+by the \textit{Serverless Framework} \cite{sls} (referred to as \textit{SLS} in this thesis):
+this framework streamlines the operational efforts by providing a simple abstraction layer
+that can deploy with ease to all major cloud providers by tweaking a few configuration details.
+Thus, \textit{SLS} helps in breaking the constraint of vendors lock-in, and it also brightens
+the developer experience by extending workflows through CLI tools, debugging facilities and useful plugins.
 
 \section{Server-side JavaScript}
 
