@@ -160,7 +160,26 @@ before dismantling the container, keeping it in a so-called "warm" state,
 so they are able to run the code without all the initialization overhead:
 this approach is obviously more costly, but it dramatically improves performances.
 
-\paragraph{\textbf{Vendor lock-in}}
+\paragraph{\textbf{Vendor lock-in}} Any outsourcing strategy is subject to this limitation.
+Users are bound to the vendors' decisions who wield control over
+system downtimes, cost changes, loss of functionality, forced API upgrades and many
+more limits that may, at times, be enforced unilaterally.
+In addition, each vendor offers different features and workflows,
+often deeply integrated with their own private services,
+and as a result switching vendors means updating operational tools (deployment, monitoring, etc.),
+modifying the code to satisfy the new FaaS interfaces, and most importantly
+porting chunks of the architecture from one infrastructure to another.
+To circumvent this issue, programs should be created in platform-agnostic manner,
+without relying too heavily on the third-party services offered by the platform provider.
+Moreover, serverless architectures can be achieved through open-source solutions
+at the expense of handling some parts of the infrastructure manually.
+
+\paragraph{\textbf{Complex debugging}} Monitoring, tracing, logging, and debugging
+are harder in serverless environments because of their ephemeral and stateless nature.
+These limits originate from the fact that that cloud environments are difficult
+to simulate in local contexts, therefore techniques like integration testing become unpractical.
+Although entire functions can be timed, there is typically no
+ability to dig into more detail by attaching profilers, debuggers or APM tools \cite{debug}.
 
 \subsection{Serverless use cases}
 
