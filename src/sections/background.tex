@@ -216,7 +216,38 @@ the developer experience by extending workflows through CLI tools, debugging fac
 
 \section{Server-side JavaScript}
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+\begin{quote}
+  \textit{"Any application that can be written in JavaScript, will eventually be written in JavaScript."}
+\end{quote}
+
+As time passes, this quote by Jeff Atwood becomes more and more accurate:
+in fact, it should be expanded in scope to include all types of software,
+as \textit{JavaScript} continues to evolve and keeps being one of the most
+popular programming languages of all time.
+
+Despite its troubled initial development, its versatility and simplicity
+have taken the language a long way, giving rise to a vibrant open-source ecosystem
+that has enlarged its domain beyond web browsers:
+\textit{JavaScript} is now widely used in diverse fields including
+game development, IoT, data analysis, and numerous other contexts.
+
+Probably, the most important contribution to the language has been
+the advent of \textit{Node.js} in 2009 \cite{node}, which is a runtime environment
+that executes \textit{JavaScript} outside a web browser.
+This technology played a pivotal role in reshaping users' perceptions of \textit{JavaScript}:
+it transitioned from being regarded as a mere scripting language
+to being recognized as a capable general-purpose one.
+
+\textit{Node.js} does not follow the path of other programming languages' runtimes,
+rather it inherits the strengths of \textit{JavaScript} and builds upon them,
+consequently making this environment unique in many ways.
+It operates on a single-thread event loop,
+using non-blocking I/O calls, allowing it to support tens of thousands
+of concurrent connections without incurring the cost of thread context switching.
+
+This event-driven design optimizes throughput and scalability in architectures
+bound to many asynchronous I/O operations, but it is limited in CPU-heavy environments
+given the single-threaded nature of \textit{Node.js}.
 
 \subsection{TypeScript}
 
