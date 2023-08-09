@@ -108,7 +108,7 @@ For example, consider a web application with two HTTP endpoints, denoted as endp
 where $A$ is frequently called while $B$ is very rarely requested.
 In a traditional monolith, the entire web app would need to manually be scaled
 to handle unpredictable load spikes of $A$ calls, and even in normal circumstances
-the costs would still be inefficiently allocated just to manage some occasional $B$ requests.
+resources would still be inefficiently allocated just to manage some occasional $B$ requests.
 By encapsulating their logic inside two different serverless functions,
 endpoint $A$ can be allocated more resources when it experiences high demand,
 while endpoint $B$ might cost almost zero due to its occasional requests.
@@ -127,7 +127,7 @@ Latency is also reduced by deploying functions geographically near the end-users
 conjunction with code deployed in traditional styles,
 such as microservices or monoliths~\cite{serverless-wikipedia}.
 Therefore, this model can be incrementally adopted by large companies and benefit
-complex existing systems. Start-ups should prioritize following a pure serverless approach
+complex existing systems. Though, start-ups should prioritize following a pure serverless approach
 because of all the previously mentioned benefits.
 
 \subsubsection{Serverless architectures shortcomings}
@@ -155,7 +155,7 @@ allocating all the resources needed to run a function can cause significant
 delays. This well-known problem, named "cold start", is
 particularly emphasized with technologies requiring heavy runtimes, such as JVM-based languages.
 To avoid this constraint, platform providers usually wait some time
-before dismantling the container, keeping it in a so-called "warm" state,
+before dismantling the container, keeping it in a so-called "warm" state, as shown in Figure~\ref{fig:serverless-functions-lifecycle},
 so they are able to run the code without all the initialization overhead:
 this approach is obviously more costly, but it dramatically improves performances.
 
@@ -201,7 +201,7 @@ paradigm is being used and how well it performs:
 \end{itemize}
 
 The first two points also serve to understand how \f{} operates:
-we choose to compile \textit{JavaScript} codebases written following
+we chose to compile \textit{JavaScript} codebases written following
 \textit{AWS Lambda}'s interfaces due to their ever-growing popularity.
 Furthermore, the meta-programming offered through \f{}'s annotations
 can be expanded to support different platform providers.
@@ -238,17 +238,20 @@ This technology played a pivotal role in reshaping users' perceptions of \textit
 it transitioned from being regarded as a mere scripting language
 to being recognized as a capable general-purpose one.
 
-\textit{Node.js} does not follow the path of other programming languages' runtimes,
-rather it inherits the strengths of \textit{JavaScript} and builds upon them,
-consequently making this environment unique in many ways.
-It operates on a single-thread event loop,
+\textit{Node.js} stands apart from traditional programming language runtimes,
+and, instead, inherits the strengths of \textit{JavaScript} and builds upon them,
+making this environment unique in many ways.
+\textit{Node.js} operates on a single-thread event loop,
 using non-blocking I/O calls, allowing it to support tens of thousands
 of concurrent connections without incurring the cost of thread context switching.
 
 This event-driven design optimizes throughput and scalability in architectures
 bound to many asynchronous I/O operations, but it is limited in CPU-heavy environments
 given the single-threaded nature of \textit{Node.js}.
+For this reason, \textit{Node.js} shines in serverless architectures more than
+traditional ones, since it is a great runtime to write the ephemeral and stateless
+cloud functions, where users do not need to think about the orchestration of distributed systems.
 
 \subsection{TypeScript}
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim
+% \textit{TypeScript} is a superset of \textit{JavaScript} which adds types to 
