@@ -225,7 +225,7 @@ in fact, it should be expanded in scope to include all types of software,
 as \textit{JavaScript} continues to evolve and keeps being one of the most
 popular programming languages of all time.
 
-Despite its troubled initial development, its versatility and simplicity
+Despite its humble beginnings, its versatility and simplicity
 have taken the language a long way, giving rise to a vibrant open-source ecosystem
 that has enlarged its domain beyond web browsers:
 \textit{JavaScript} is now widely used in diverse fields including
@@ -254,4 +254,96 @@ cloud functions, where users do not need to think about the orchestration of dis
 
 \subsection{TypeScript}
 
-% \textit{TypeScript} is a superset of \textit{JavaScript} which adds types to 
+\textit{TypeScript} is a superset of \textit{JavaScript} with an additional fundamental layer: the type system.
+
+Just like \textit{Node.js}, \textit{TypeScript} is a pretty unique technology.
+Indeed, this language was born to fix many of the quirks present in \textit{JavaScript},
+which, given its popularity, started being used in codebases with hundreds of thousands of lines of code,
+even though, it was never intended for such use cases, hence,
+its error-prone nature started appearing at runtime with all its oddities and surprises.
+While other tools tried replacing it, and consequently failed (e.g., \textit{CoffeeScript}),
+\textit{TypeScript} embraces it and adds a compile-time type checker to drastically lower the chance of bugs.
+
+\textit{TypeScript} is a strongly typed programming language,
+but it is also designed to support existing \textit{JavaScript} codebases,
+and as a result many of the strict type checks performed can be loosened up to
+compile regular \textit{JavaScript}. Furthermore, \textit{TypeScript} guarantees
+to preserve the runtime behavior, even if the compiler raises type errors,
+allowing the transition between the two languages to happen without subtle differences.
+Once the compiler has finished checking the code, the types are erased and the resulting
+code has no type information.
+
+Normally, \textit{TypeScript} is very strict during its checks,
+so other than blocking the weird \textit{JavaScript} parts,
+it also provides guards for writing code at enterprise level,
+ensuring that everything works even in big projects with multiple teams,
+as long as the established type definitions are followed.
+
+\begin{lstlisting}[language=javascript, caption={\textit{TypeScript}'s type checks}, label={lst:ts-checks}]
+/* Guards against JavaScript's quirks */
+if ('' == 0) {
+}
+// Error: This comparison appears to be unintentional because the
+// types 'string' and 'number' have no overlap.
+
+console.log(4 / [])
+// While this is a syntactically-legal instruction that logs `Infinity`,
+// TypeScript will issue an error because it is a nonsensical operation.
+
+/* Strict type checks */
+type User = {
+  firstName: string
+  lastName: string
+  role: 'Professor' | 'Student'
+}
+
+const user: User = {
+  firstName: 'Angela',
+  lastName: 'Davis',
+  role: 'Professor',
+  name: 'Angela Davis',
+}
+// Error: Object literal may only specify known properties
+// and 'name' does not exist in type 'User'.
+\end{lstlisting}
+
+Listing~\ref{lst:ts-checks} previews a very important principle of \textit{TypeScript},
+its structural type system. Although, most strongly typed languages implement a nominal type system,
+where two types are considered equal when their names correspond,
+\textit{TypeScript} had to be more pervasive to enhance
+\textit{JavaScript}'s dynamic duck typing \cite{duck-typing},
+and as a consequence it implements structural checks, where, rather than the name,
+the shapes of the values are compared
+
+\begin{lstlisting}[language=javascript]
+type Dollar = number
+type Euro = number
+declare function foo(n: Dollar): void
+declare const e: Euro
+// This function call raises an error in a nominal system
+// because `foo` only accepts an argument of type `Dollar`,
+// but works completely fine in a structural system,
+// since the two types share the same shape of `number`.
+foo(e)
+\end{lstlisting}
+
+To be more precise, \textit{TypeScript}'s type system is not entirely structural,
+as it offers nominal typing-like mechanisms to simplify the writing of new definitions,
+by making types unique symbols across their contexts, which is especially useful for
+creating recursive data structures.
+
+All these key factors (i.e., strictness, compatibility with \textit{JavaScript}, structural typing),
+have greatly boosted \textit{TypeScript} popularity at every scale of software development.
+On top of that, it introduces powerful features that improve developers' experience:
+
+\begin{itemize}
+  \item Types inference support vastly superior in comparison to most commercial
+    general-purpose programming languages.
+  \item Enriched build pipeline. Before \textit{TypeScript} existed, projects
+    were developed through complex combinations of different tools, especially if the
+    developers preferred to use newer features of \textit{JavaScript} that were not
+    supported yet. \textit{TypeScript} simplifies this workflow since it provides
+    an inclusive build system which compiles even the experimental features of the language
+    to older versions without the need for polyfills or other technologies.
+  \item Better tooling.
+\end{itemize}
