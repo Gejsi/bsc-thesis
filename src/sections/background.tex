@@ -313,13 +313,13 @@ where two types are considered equal when their names correspond,
 \textit{TypeScript} had to be more pervasive to enhance
 \textit{JavaScript}'s dynamic duck typing \cite{duck-typing},
 and as a consequence it implements structural checks, where, rather than the name,
-the shapes of the values are compared
+the shapes of the values are compared.
 
 \begin{lstlisting}[language=javascript]
 type Dollar = number
 type Euro = number
-declare function foo(n: Dollar): void
-declare const e: Euro
+function foo(n: Dollar)
+let e: Euro
 // This function call raises an error in a nominal system
 // because `foo` only accepts an argument of type `Dollar`,
 // but works completely fine in a structural system,
@@ -333,17 +333,35 @@ by making types unique symbols across their contexts, which is especially useful
 creating recursive data structures.
 
 All these key factors (i.e., strictness, compatibility with \textit{JavaScript}, structural typing),
-have greatly boosted \textit{TypeScript} popularity at every scale of software development.
+have greatly boosted \textit{TypeScript}'s popularity at every scale of software development.
 On top of that, it introduces powerful features that improve developers' experience:
 
 \begin{itemize}
   \item Types inference support vastly superior in comparison to most commercial
-    general-purpose programming languages.
+    general-purpose programming languages.%, also including flow-sensitive typing.
   \item Enriched build pipeline. Before \textit{TypeScript} existed, projects
     were developed through complex combinations of different tools, especially if the
     developers preferred to use newer features of \textit{JavaScript} that were not
-    supported yet. \textit{TypeScript} simplifies this workflow since it provides
+    supported by the runtime yet. \textit{TypeScript} simplifies this workflow since it provides
     an inclusive build system which compiles even the experimental features of the language
     to older versions without the need for polyfills or other technologies.
-  \item Better tooling.
+  \item Better tooling through open-source contributions.
+    For example, \textit{TypeScript} was the reason at the birth of \textit{Language Server Protocol} (\textit{LSP}),
+    which enriches code editors with language intelligence tools such as code completion, syntax highlighting,
+    error marking, refactoring routines and many more features. Traditionally, all this work
+    had to be repeated for each programming language as they all built upon different APIs,
+    but now all major programming languages follow this specification, which decouples
+    the language services from the editor.
+    This is just one of the tools built because of and for \textit{TypeScript},
+    but it should not be underestimated since it improves developers' experience significantly.
 \end{itemize}
+
+In serverless computing, where functions need to be self-contained, concise, and easily deployable,
+\textit{TypeScript} strengths are particularly valuable, since
+it encourages developers to write robust and maintainable code.
+This is convenient since cloud functions are harder to test and debug,
+and having compile-time errors reduces maintenance costs and saves a lot of time.
+
+\f{} uses the parser offered by the \textit{TypeScript} API
+to handle AST traversals and manipulations,
+so it parses both \textit{TypeScript} and \textit{JavaScript} codebases.
