@@ -10,7 +10,7 @@ in today's dynamic environments, which are supposed to be scalable by design.
 
 Traditionally, software was written in monolithic architectures where
 the program's components are tightly coupled and tend to create
-large codebases, as they provide heterogeneous functionalities under the same façade.
+large codebases, as they provide heterogeneous functionalities under the same interface.
 This paradigm, despite being the oldest, still has some benefits that
 draw developers' attention especially in the early stages of the development lifecycle:
 indeed, these architectures furnish the maximum amount of control over the infrastructure,
@@ -20,7 +20,35 @@ Yet, the drawbacks of this paradigm were understood even in the past:
 a case in point is the \textit{Unix} community, which moved away from it,
 preferring a modular approach instead. Monoliths are hard to maintain, deploy,
 adapt to changing requirements and technologies, and
-become rigid quickly as reshaping its components may change involuntary bugs.
+become rigid quickly as reshaping its components may involuntarily cause a chain of problems.
+
+On the other hand, a modular approach, where features are developed in
+independent software units, gained popularity in the cloud services realm.
+These so-called microservices architectures arrange
+programs into collections of orchestrated, loosely coupled, fine-grained services
+communicating through networking protocols such as HTTP.
+A microservice is a self-contained service, organized around a specific set
+of needed capabilities, that lets developers easily implement a layered architecture
+using different technologies (e.g., programming languages, databases, etc.).
+This distributed architectural pattern overcomes the shortcomings of monoliths,
+as its modular nature makes it scalable, easily deployable, and allows different teams
+to work together without the risk to take down the entire structure when a minor issue comes up.
+
+Still, microservices are not the most efficient way of handling cloud computing,
+since they are long-running processes that need to be carefully planned and managed
+by configuring the underlying infrastructure. To resolve this operational costs,
+serverless architectures were recently created.
+
+The serverless pattern promises to let its users focus simply on the business logic,
+by shifting away to the cloud platform provider the infrastructure management,
+resources allocation and provisioning, thus enabling computing units to autoscale on a pay-as-you go manner.
+In this model, users write the code inside single-purpose units (i.e., programming languages' functions),
+so they are even smaller than microservices in responsibility,
+and they set which event will trigger its invocation.
+This event-driven model of dispatching actions is very efficient, in fact,
+once a function is triggered, the cloud vendor executes it in an isolated,
+secure and short-lived environment.
+Consequently, users are only billed for the precise resources consumed during this execution period.
 
 
 \section{Objectives} % *incremental adoption*
