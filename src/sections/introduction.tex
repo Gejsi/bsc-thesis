@@ -3,8 +3,8 @@
 % Briefly introduce the topic of serverless computing and its growing significance in modern software development.
 % Mention the challenges and complexities developers face when working with serverless architectures.
 Modern software development requires complex tooling to handle
-all the concepts which surround the actual code and business logic.
-Besides the actual program implementation, there are many components to consider
+the intricate landscape encompassing the actual code and business logic.
+Besides the program implementation, there are many components to consider
 when thinking about all the moving parts needed to make software work
 in today's dynamic environments, which are supposed to be scalable by design.
 
@@ -26,31 +26,50 @@ On the other hand, a modular approach, where features are developed in
 independent software units, gained popularity in the cloud services realm.
 These so-called microservices architectures arrange
 programs into collections of orchestrated, loosely coupled, fine-grained services
-communicating through networking protocols such as HTTP.
+communicating through protocols such as HTTP.
 A microservice is a self-contained service, organized around a specific set
-of needed capabilities, that lets developers easily implement a layered architecture
+of needed business capabilities, that lets developers easily implement a layered architecture
 using different technologies (e.g., programming languages, databases, etc.).
 This distributed architectural pattern overcomes the shortcomings of monoliths,
 as its modular nature makes it scalable, easily deployable, and allows different teams
-to work together without the risk to take down the entire structure when a minor issue comes up.
+to work together without the risk of taking down the entire structure when a minor issue arrives.
 
 Still, microservices are not the most efficient way of handling cloud computing,
 since they are long-running processes that need to be carefully planned and managed
-by configuring the underlying infrastructure. To resolve this operational costs,
+by configuring the underlying infrastructure. To reduce these operational costs,
 serverless architectures were recently created.
 
 The serverless pattern promises to let its users focus simply on the business logic,
 by shifting away to the cloud platform provider the infrastructure management,
 resources allocation and provisioning, thus enabling computing units to autoscale on a pay-as-you go manner.
 In this model, users write the code inside single-purpose units (i.e., programming languages' functions),
-so they are even smaller than microservices in responsibility,
+even smaller than microservices in responsibility,
 and they set which event will trigger its invocation.
 This event-driven model of dispatching actions is very efficient, in fact,
-once a function is triggered, the cloud vendor executes it in an isolated,
-secure and short-lived environment.
+once a function is triggered, the cloud vendor executes it in an isolated, secure and short-lived environment.
 Consequently, users are only billed for the precise resources consumed during this execution period.
 
+Serverless is not free of disadvantages and, while traditional solutions
+had generations of practitioners and researchers improving the development experience
+by providing guidelines, best practices, and tools suited for each phase
+of the development lifecycle (design, programming, debugging, maintenance, etc.),
+the serverless model is still in its infancy and lacks a similar depth of accumulated wisdom and refinement.
 
 \section{Objectives} % *incremental adoption*
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+In this thesis we present \f{}, a framework which aims to enhance serverless architectures
+by simplifying the development of cloud functions through its meta-programming functionalities.
+Users mark the serverless functions with annotations that signal the \f{} compiler
+which code transformations are going to be needed and which metadata will be used
+for their deployment, therefore streamlining different parts of the development lifecycle simultaneously.
+\f{} transpiles \textit{JavaScript} codebases whose functions are executed
+through \textit{AWS Lambda}'s \textit{Node.js} runtime.
+This is accompanied by the seamless management of projects
+through our user-friendly CLI, ensuring an efficient and graceful path
+into the adoption of the serverless model.
+
+% The thesis is structured as follows:
+% \begin{itemize}
+%   \item In \cref{chap:background}, we delve deeper into all the information
+%     needed to understand serverless architectures and 
+% \end{itemize}
