@@ -1,7 +1,38 @@
-\chapter{Conclusions}
+\chapter{Conclusion}
 \label{chap:conclusion}
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+After a brief introduction, we discussed all the necessary knowledge needed
+to understand this thesis in \cref{chap:background}, and finally we inspected
+how \f{} works by thoroughly examining its inner components in \cref{chap:implementation}.
+
+The most important concept to recall about this framework is its goal,
+and how it tries to achieve it.
+\f{} wants to enhance the serverless model through its meta-programming
+features. In fact, its core annotations operate very differently from each other,
+as they are related to distinct domains, but they still can be combined
+to enrich the development experience.
+Thus, \f{}'s users are not only inheriting all the
+benefits offered by serverless architectures,
+but they are also accessing all its powerful code
+transformations that can save precious development time.
+
+\f{} was also designed to help migrate existing
+monolithic codebases into serverless ones through an incremental approach,
+meaning that, users do not need to convert their entire project, but they
+can partially adopt this new computing paradigm by iteratively rewriting features.
+Additionally, it is crucial to comprehend that the code
+emitted by \f{} is not set in stone, instead, it can be actively modified
+and even used as a starting point for the codebase.
+\f{} should be viewed as a co-pilot rather than a fully comprehensive tool to write serverless functions.
+
+\f{}'s most notable limitation is the lack of more core annotations,
+% which was due to the fact that creating the foundations of the framework,
+% reflecting on valuable transformers and writing their implementation was a very time-consuming process.
+which stems from the substantial time investment required
+to establish the framework's foundations, reflect on valuable transformers, and write their implementation.
+Still, users are encouraged to create their custom annotations
+tailored to address their specific use cases, which can include scenarios
+that cannot be foreseen by \f{} due to their unique nature.
 
 \section{Comparison with previous studies}
 
