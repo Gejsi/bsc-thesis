@@ -34,6 +34,23 @@ Still, users are encouraged to create their custom annotations
 tailored to address their specific use cases, which can include scenarios
 that cannot be foreseen by \f{} due to their unique nature.
 
+Another important decision to discuss is our rationale behind selecting \textit{TypeScript}.
+Many other programming languages offer meta-programming compile-time capabilities,
+like \textit{Rust} macros, \textit{C++} templates or \textit{Zig} comptime:
+while, such systems are far superior to our annotations,
+these low-level languages are not suitable for the high-level programming
+that the serverless functions are supposed to entail, in fact most of these languages
+do not have runtime support from any major platform provider.
+Moreover, even more high-level languages with similar compile-time features like \textit{Scala}
+demand to be monitored with caution, because of their heavy
+runtime initialization spin-ups (i.e., \textit{JVM} for \textit{Scala})
+that may cause expensive cold starts.
+
+\textit{TypeScript}, enriched with our annotations, perfectly fits
+the serverless model as it runs, after its strict static type checks,
+on \textit{Node.js}, which is a well-suited lightweight environment designed to handle distributed services
+as discussed in \cref{sec:node}.
+
 \section{Comparison with previous studies}
 
 Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.

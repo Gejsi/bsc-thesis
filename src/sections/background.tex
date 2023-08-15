@@ -153,7 +153,7 @@ and if misused they can become more costly than traditional solutions.
 can be a crucial drawback for systems performance, as the overhead for
 allocating all the resources needed to run a function can cause significant
 delays. This well-known problem, named "cold start", is
-particularly emphasized with technologies requiring heavy runtimes, such as JVM-based languages.
+particularly emphasized with technologies requiring heavy runtimes, such as \textit{JVM}-based languages.
 To avoid this constraint, platform providers usually wait some time
 before dismantling the container, keeping it in a so-called "warm" state, as shown in Figure~\ref{fig:serverless-functions-lifecycle},
 so they are able to run the code without all the initialization overhead:
@@ -215,6 +215,7 @@ Thus, \textit{SLS} helps in breaking the shortcomings of vendors' control, and i
 the developer experience by extending workflows through CLI tools, debugging facilities and useful plugins.
 
 \section{Server-side JavaScript}
+\label{sec:node}
 
 \begin{quote}
   \textit{"Any application that can be written in JavaScript, will eventually be written in JavaScript."}
