@@ -1,4 +1,4 @@
-\chapter{Conclusion}
+\chapter{Conclusions}
 \label{chap:conclusion}
 
 After a brief introduction, we discussed all the necessary knowledge needed
@@ -26,10 +26,8 @@ and even used as a starting point for the codebase.
 \f{} should be viewed as a co-pilot rather than a fully comprehensive tool to write serverless functions.
 
 \f{}'s most notable limitation is the lack of more core annotations,
-% which was due to the fact that creating the foundations of the framework,
-% reflecting on valuable transformers and writing their implementation was a very time-consuming process.
 which stems from the substantial time investment required
-to establish the framework's foundations, reflect on valuable transformers, and write their implementation.
+to establish the framework's foundations, reflect on valuable transformers and write their implementation.
 Still, users are encouraged to create their custom annotations
 tailored to address their specific use cases, which can include scenarios
 that cannot be foreseen by \f{} due to their unique nature.
@@ -37,23 +35,62 @@ that cannot be foreseen by \f{} due to their unique nature.
 Another important decision to discuss is our rationale behind selecting \textit{TypeScript}.
 Many other programming languages offer meta-programming compile-time capabilities,
 like \textit{Rust} macros, \textit{C++} templates or \textit{Zig} comptime:
-while, such systems are far superior to our annotations,
+such systems are far superior to our annotations, yet,
 these low-level languages are not suitable for the high-level programming
 that the serverless functions are supposed to entail, in fact most of these languages
-do not have runtime support from any major platform provider.
-Moreover, even more high-level languages with similar compile-time features like \textit{Scala}
+do not have the runtime support from any major platform provider.
+Moreover, even high-level languages with similar compile-time features like \textit{Scala}
 demand to be monitored with caution, because of their heavy
-runtime initialization spin-ups (i.e., \textit{JVM} for \textit{Scala})
+runtime (i.e., \textit{JVM} for \textit{Scala}) initialization spin-ups
 that may cause expensive cold starts.
 
 \textit{TypeScript}, enriched with our annotations, perfectly fits
 the serverless model as it runs, after its strict static type checks,
-on \textit{Node.js}, which is a well-suited lightweight environment designed to handle distributed services
-as discussed in \cref{sec:node}.
+on \textit{Node.js}, which is a well-suited lightweight environment
+designed to handle distributed services as discussed in \cref{sec:node}.
 
 \section{Comparison with previous studies}
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+One of the features offered by \f{} is the fact that it can port
+an existing monolith to a serverless platform as shown in \cref{sec:example}.
+This process, named ``FaaSification'', has captured the attention of researchers
+who have explored and presented various solutions to this challenge.
+
+The first attempts were developed for \textit{Python} and \textit{Java} monoliths,
+with the tools being named respectively \textit{Lambada} \cite{lambada} and \textit{Termite} \cite{termite}.
+They are fairly limited as their emitted code cannot correctly process inputs,
+and they do not support the use of global variables within the serverless functions.
+
+Instead, let us focus on the technologies built around \textit{JavaScript}:
+
+\paragraph{\textbf{Node2Faas} \cite{node2faas}}
+It was the first \textit{JavaScript} faasifier:
+it converts methods of the \textit{Node.js} monolith into serverless
+functions and replaces their bodies with an API call to the target FaaS system.
+This tool has many weaknesses: most notably it cannot resolve neither code
+nor package dependencies, which is a considerable constraint since many
+cloud functions work by using third-part services.
+
+\paragraph{\textbf{DAF} and \textbf{M2FaaS} \cite{daf, m2faas}}
+They were built by the same team of researchers, the latter, \textit{M2FaaS},
+represents an improved iteration of the former.
+They introduce a concept similar to our annotations, through which users
+can mark arbitrary parts of their code with the dependencies needed to be deployed.
+The outcome is a serverless monolithic application hybrid. 
+However, due to technical limitations, the development effort to write their marking constructs
+is remarkable as users are compelled to write configuration details inside their business logic.
+
+\paragraph{\textbf{FaaSFusion} \cite{faasfusion}}
+This is the closest work to \f{}.
+\textit{FaaSFusion}'s users also mark their functions with annotations
+and some associated code transformations occur.
+This framework brings infrastructure-as-code concepts into the function source,
+but this approach has evident shortcomings since it relies on heuristics as its foundation.
+For example, it offers an annotation named \annotation{@Warmup} which
+injects an algorithm to periodically ping the function
+through a \textit{CloudWatch} event to avoid cold starts.
+However, \textit{AWS Lambda} itself has suggested avoiding these so-called ``warmers'',
+because they are mostly ineffective, break serverless principles, and can increase costs very quickly.
 
 \section{Future directions}
 

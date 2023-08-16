@@ -17,23 +17,23 @@ Cloud computing is supplied as a collection of service models,
 hence, users can arrange different abstraction layers based on their necessities.
 
 \begin{enumerate}
-  \item Infrastructure as a service (IaaS): these are the most low-level services that can be provided,
+  \item Infrastructure as a Service (IaaS): these are the most low-level services that can be provided,
     like bare metal servers, storage, virtual machines, load balancers, etc.
-  \item Platform as a service (PaaS): an entire toolkit or development environment
+  \item Platform as a Service (PaaS): an entire toolkit or development environment
     made for scaling applications without thinking about the underlying infrastructure.
     PaaS vendors may offer programming languages execution environments, databases,
     web servers and many more technologies.
-  \item Software as a service (SaaS): this model is in direct contact with the end-user,
+  \item Software as a Service (SaaS): this model is in direct contact with the end-user,
     as it refers to the application software standing on top of the platforms and infrastructure.
     Cloud users, such as people using mobile phones, access the software through a subscription fee,
     without ever needing to install anything because the application is built on top of and balanced through
     the previously mentioned layers.
 \end{enumerate}
 
-Most recently, a new model has appeared, named FaaS--Function as a service,
-delivering a cloud platform that offers computing runtimes with support for serverless architectures.
+Most recently, a new model has appeared, named Function as a service (FaaS),
+delivering a cloud service that offers computing runtimes with support for serverless architectures.
 
-Furthermore, the serverless model is also encompassed as BaaS--Backend as a service,
+Furthermore, the serverless model is also encompassed as Backend as a service (BaaS),
 usually accessible via APIs, providing support for many technologies like serverless databases,
 but these services will not be examined in this thesis.
 
@@ -47,17 +47,17 @@ In traditional monoliths, or even microservices, developers are concerned
 with capacity planning, configurations, management, fault tolerance, and
 scaling containers, VMs or physical servers.
 
-Serverless architectures abstract way all these inconveniences
+Serverless architectures abstract way all these concerns
 by allowing developers to focus solely on writing application logic,
-and letting the FaaS vendors to handle the burden of provisioning and scaling infrastructures.
+and letting the FaaS vendors handle the burden of provisioning and scaling infrastructures.
 
-To achieve this goal, developers write the logic inside computational units
+To achieve this goal, developers write the logic inside software units
 called cloud functions, which are run in short-lived environments triggered by some kind of event.
-Cloud functions recall the concept of programming languages functions,
-as they both associate an input to an output, and as a matter of fact, 
+Cloud functions recall the concept of functions in programming languages,
+as they associate an input to an output, and as a matter of fact, 
 cloud functions' logic is encapsulated inside the latter.
 Yet, cloud functions need to be considered as resources rather than instructions of code,
-as they are computing units invoked by the serverless provider and metered on-demand through an event-driven execution model,
+as they are software units invoked by the serverless provider and metered on-demand through an event-driven execution model,
 thus they can be written in different programming languages (e.g., \textit{Go}, \textit{Java}, \textit{JavaScript})
 as long as the chosen vendor has adequate support for the language runtime.
 
@@ -83,8 +83,8 @@ have fast startup/shutdown times and minimal overhead due to their virtualized n
 Serverless is a misnomer, since servers are still in the picture,
 this computing model must not be confused with other paradigms
 that do not require an actual server such as peer-to-peer (P2P)~\cite{serverless-wikipedia}.
-Instead, it is more accurate to interpret it as "less-server",
-therefore emphasizing the shift in architectural responsibility from developers actively
+Instead, it is more accurate to interpret it as ``less-server'',
+therefore emphasizing the shift from developers actively
 managing server infrastructure to entrusting platform providers to manage the underlying server complexities.
 
 Figure~\ref{fig:serverless-functions-lifecycle} shows that serverless functions
@@ -116,7 +116,7 @@ while endpoint $B$ might cost almost zero due to its occasional requests.
 \paragraph{\textbf{Productivity}} Developers can focus solely on writing
 business logic. Exposing units of code only through an event-driven model simplifies back-end development,
 also alleviating the typical problems related to distributed systems (e.g., multithreading).
-Moreover, development becomes quicker as deploying is easier and updates are granular,
+Moreover, development becomes quicker as deployment is easier and updates are granular,
 thus increasing the agility of the team and rapid prototyping of new products.
 
 \paragraph{\textbf{High availability}} Thanks to the distributed nature of serverless computing,
@@ -132,9 +132,8 @@ because of all the previously mentioned benefits.
 
 \subsubsection{Serverless architectures shortcomings}
 
-Serverless computing is not flawless, and some researchers \cite{two-steps-back}
-point out the limits that are inherent to this paradigm, which cannot be solved
-by updating the state of the art even with tools like \f{}.
+Serverless computing is not flawless, and researchers \cite{two-steps-back}
+pointed out some of the limits that are inherent to this paradigm.
 
 \paragraph{\textbf{State management}} Considering that there is no server-state,
 the programming model needs to shift for developers, as numerous applications require
@@ -152,10 +151,10 @@ and if misused they can become more costly than traditional solutions.
 \paragraph{\textbf{Cold starts}} Serverless functions startup times
 can be a crucial drawback for systems performance, as the overhead for
 allocating all the resources needed to run a function can cause significant
-delays. This well-known problem, named "cold start", is
+delays. This well-known problem, named ``cold start'', is
 particularly emphasized with technologies requiring heavy runtimes, such as \textit{JVM}-based languages.
 To avoid this constraint, platform providers usually wait some time
-before dismantling the container, keeping it in a so-called "warm" state, as shown in Figure~\ref{fig:serverless-functions-lifecycle},
+before dismantling the container, keeping it in a so-called ``warm'' state, as shown in Figure~\ref{fig:serverless-functions-lifecycle},
 so they are able to run the code without all the initialization overhead:
 this approach is obviously more costly, but it dramatically improves performances.
 
@@ -218,7 +217,7 @@ the developer experience by extending workflows through CLI tools, debugging fac
 \label{sec:node}
 
 \begin{quote}
-  \textit{"Any application that can be written in JavaScript, will eventually be written in JavaScript."}
+  \textit{``Any application that can be written in JavaScript, will eventually be written in JavaScript.''}
 \end{quote}
 
 As time passes, this quote by Jeff Atwood becomes more and more accurate:
