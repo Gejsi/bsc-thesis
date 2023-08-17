@@ -93,11 +93,60 @@ however, platform providers have suggested avoiding these so-called ``warmers'',
 because they are mostly ineffective, break serverless principles, and can increase costs very quickly.
 
 The main obstacle that these tools do not overcome is that they are
-not designed to handle codebases beyond the non-trivial examples
+not designed to handle codebases beyond the trivial examples
 which they present to support their cases.
 In comparison, \f{} is very powerful, and its scope is broader
 as it represents more than a simple ``faasifier''.
 
 \section{Future directions}
 
-Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+We believe \f{} could be improved further by expanding its features
+or by building tools built around it.
+We close this thesis by listing a few of the enhancements \f{} could receive.
+
+\subsection{More annotations}
+
+\f{} should have more core annotations.
+Also, while the existing annotations currently don't exhibit conflicts with each other,
+it's prudent to anticipate potential conflicts that could arise when new annotations are introduced:
+consequently, incorporating new constraints becomes essential to prevent such
+conflicts and ensure the smooth coexistence of annotations within the framework.
+
+\f{} should add support for marking not just top-level functions, but also other AST nodes.
+This feature would enrich the framework further, as users would have more freedom
+to change how transformations happen. These new annotations may be inside the function itself,
+marking nodes inline, or even at the source level. Additionally, they may be related to a particular annotation,
+thus, creating sets of domain-specific annotations.
+For example, \annotation{\$Fixed}, whose objective is related to ``faasification'',
+could have \textit{children} annotations that would issue a warning if used under other top-level annotations.
+\begin{lstlisting}[language=javascript]
+/** $\dollar$Fixed */
+export async function foo() {
+  const data = await query()
+  // new inner annotation, which changes parts of the emitted code
+  /** $\dollar$StatusCode(code: 201) */
+  return data
+}
+\end{lstlisting}
+
+\subsection{Formalization}
+
+Many parts of this framework should be formalized, similarly to the work conducted by Kallas et al. \cite{formalization},
+as this would give solid foundations to \f{}:
+
+\begin{itemize}
+  \item Annotation syntax and semantics, including defining
+    the structure of annotations, allowed parameters, and their meanings,
+    because we only presented an preliminary insight in \cref{sec:annotations}.
+
+  \item Composition semantics to spot potential conflicts between annotations.
+
+  \item Transformations algorithms to ensure correctness, predictability,
+    and consistency in the compilation process, given some notion of behavioral correspondence.
+\end{itemize}
+
+\subsection{Linter}
+
+Linter.
+
+Choral
