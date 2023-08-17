@@ -137,9 +137,9 @@ as this would give solid foundations to \f{}:
 \begin{itemize}
   \item Annotation syntax and semantics, including defining
     the structure of annotations, allowed parameters, and their meanings,
-    because we only presented an preliminary insight in \cref{sec:annotations}.
+    because we only presented a preliminary insight in \cref{sec:annotations}.
 
-  \item Composition semantics to spot potential conflicts between annotations.
+  \item Composition semantics to spot potential conflicts while using multiple annotations.
 
   \item Transformations algorithms to ensure correctness, predictability,
     and consistency in the compilation process, given some notion of behavioral correspondence.
@@ -147,6 +147,13 @@ as this would give solid foundations to \f{}:
 
 \subsection{Linter}
 
-Linter.
+Currently, there is no standalone linter or set of rules for existing ones
+that captures serverless principles and enforces them on projects.
+A new linter may analyze the code, flag architectural smells,
+and warn users whenever they are breaking best practices:
+for example, the linter may issue an error if there is a serverless function invoking another one,
+as this could lead to increased costs, more debugging complexity, and a breach of the isolation principle.
 
-Choral
+Furthermore, a new linter could be built specifically for \f{},
+flagging errors and warnings when a developer misuses annotations.
+Linting may take place either before the transpilation process or afterward, targeting the emitted directory.
