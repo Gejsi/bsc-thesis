@@ -64,12 +64,12 @@ and they do not support the use of global variables within the serverless functi
 Instead, let us focus on the technologies built around \textit{JavaScript}:
 
 \paragraph{\textbf{Node2Faas} \cite{node2faas}}
-It was the first \textit{JavaScript} faasifier:
+It was the first \textit{JavaScript} ``faasifier'':
 it converts methods of the \textit{Node.js} monolith into serverless
 functions and replaces their bodies with an API call to the target FaaS system.
 This tool has many weaknesses: most notably it cannot resolve neither code
 nor package dependencies, which is a considerable constraint since many
-cloud functions work by using third-part services.
+cloud functions work by using third-party services.
 
 \paragraph{\textbf{DAF} and \textbf{M2FaaS} \cite{daf, m2faas}}
 They were built by the same team of researchers, the latter, \textit{M2FaaS},
@@ -85,12 +85,18 @@ This is the closest work to \f{}.
 \textit{FaaSFusion}'s users also mark their functions with annotations
 and some associated code transformations occur.
 This framework brings infrastructure-as-code concepts into the function source,
-but this approach has evident shortcomings since it relies on heuristics as its foundation.
+but this approach has evident shortcomings since it heavily relies on heuristics for its foundations.
 For example, it offers an annotation named \annotation{@Warmup} which
-injects an algorithm to periodically ping the function
-through a \textit{CloudWatch} event to avoid cold starts.
-However, \textit{AWS Lambda} itself has suggested avoiding these so-called ``warmers'',
+injects an algorithm to avoid cold starts by periodically pinging the function
+through a \textit{CloudWatch} event:
+however, platform providers have suggested avoiding these so-called ``warmers'',
 because they are mostly ineffective, break serverless principles, and can increase costs very quickly.
+
+The main obstacle that these tools do not overcome is that they are
+not designed to handle codebases beyond the non-trivial examples
+which they present to support their cases.
+In comparison, \f{} is very powerful, and its scope is broader
+as it represents more than a simple ``faasifier''.
 
 \section{Future directions}
 
