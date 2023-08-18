@@ -74,7 +74,7 @@ have fast startup/shutdown times and minimal overhead due to their virtualized n
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{diagrams/lambda}
-  \caption{Serverless function lifecycle in a warm execution environment.}
+  \caption{Serverless function lifecycle in a warm execution environment (discussed further in \cref{par:cold-starts}).}
   \label{fig:serverless-functions-lifecycle}
 \end{figure}
 
@@ -148,7 +148,7 @@ Also, the limited lifetime of serverless functions needs to be contemplated give
 they are not designed to support long-running processes,
 and if misused they can become more costly than traditional solutions.
 
-\paragraph{\textbf{Cold starts}} Serverless functions startup times
+\paragraph{\textbf{Cold starts}}\label{par:cold-starts} Serverless functions startup times
 can be a crucial drawback for systems performance, as the overhead for
 allocating all the resources needed to run a function can cause significant
 delays. This well-known problem, named ``cold start'', is

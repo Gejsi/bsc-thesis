@@ -5,7 +5,19 @@
 \noindent
 %
 \begin{otherlanguage}{italian}
-La computazione serverless è un nuovo modello architetturale cloud che promette di eseguire programmi in modo distribuito, autoscalabile, basato sugli eventi e a pagamento in base al consumo. Gli sviluppatori scrivono il codice in unità software autocontenute, chiamate funzioni serverless, e affidano ai fornitori cloud la gestione dell'infrastruttura complessa sottostante. Dopo aver esplorato questo modello architetturale, introduciamo \f{}, un framework che arricchisce il ciclo di sviluppo di tale modello fornendo agli sviluppatori nuove costruzioni speciali di meta-programmazione, dette "annotazioni", che dotano le funzioni serverless di attributi distinti, migliorandone il comportamento e le caratteristiche per allinearle a requisiti specifici dell'applicazione. \f{} offre agli sviluppatori un mezzo per sfruttare i vantaggi del serverless senza sacrificare la compatibilità con le basi di codice consolidate, poiché è in grado di convertire monoliti esistenti in \textit{TypeScript} in architetture serverless.
+Con il termine \textit{serverless} si indica un nuovo modello architetturale nel campo del cloud computing,
+caratterizzato dall'esecuzione distribuita, scalabile e basata sugli eventi dei programmi,
+con la peculiarità che i costi sono proporzionalmente correlati al consumo effettivo delle risorse.
+Gli sviluppatori scrivono il codice in unità software indipendenti, chiamate \textit{funzioni serverless},
+e affidano ai fornitori delle piattaforme la complessa gestione dell'infrastruttura sottostante.
+Dopo aver esplorato questo paradigma, introduciamo \f{},
+un framework che arricchisce il ciclo di sviluppo delle architetture serverless fornendo agli sviluppatori
+nuove costrutti di meta-programmazione, dette \textit{annotazioni},
+che dotano le funzioni serverless di attributi distinti,
+e consentono di modellarne il comportamento e le caratteristiche per adattarle alle specifiche esigenze dell'applicazione.
+\f{} permette di sfruttare tutti i vantaggi del serverless
+senza sacrificare la compatibilità con progetti già consolidati,
+poiché è in grado di convertire monoliti esistenti, scritti in \textit{TypeScript}, in architetture serverless.
 \end{otherlanguage}
 
 \newpage
@@ -19,11 +31,11 @@ La computazione serverless è un nuovo modello architetturale cloud che promette
 %
 Serverless computing is a new cloud architectural model that promises
 to execute programs in a distributed, autoscaling, event-driven, and pay-as-you go manner.
-Developers write the code in self-contained software units, called serverless functions,
+Developers write the code in self-contained software units, called ``serverless functions'',
 and they let the cloud vendors manage the complex infrastructure underneath.
 After exploring this architectural model, we introduce \f{}, which is a framework that enriches the development
 lifecycle of this model by providing the developers with new
-meta-programming special constructs, named \textit{annotations},
+meta-programming constructs, named \textit{annotations},
 that imbue serverless functions with distinct attributes,
 augmenting their behavior and characteristics to align with specific application requirements.
 \f{} offers developers an avenue to harness the merits of serverless
