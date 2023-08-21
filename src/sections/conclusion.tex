@@ -78,7 +78,7 @@ They introduce a concept similar to our annotations, through which users
 can mark arbitrary parts of their code with the dependencies needed to be deployed.
 The outcome is a serverless monolithic application hybrid. 
 However, due to technical limitations, the development effort to write their marking constructs
-is remarkable as users are compelled to write configuration details inside their business logic.
+is remarkable, as users are compelled to write configuration details inside their business logic.
 
 \paragraph{\textbf{FaaSFusion} \cite{faasfusion}}
 This is the closest work to \f{}.
@@ -95,8 +95,7 @@ because they are mostly ineffective, break serverless principles, and can increa
 The main obstacle that these tools do not overcome is that they are
 not designed to handle codebases beyond the trivial examples
 which they present to support their cases.
-In comparison, \f{} is very powerful, and its scope is broader
-as it represents more than a simple ``faasifier''.
+In comparison, \f{} is very powerful, and its scope is broader.
 
 \section{Future directions}
 
@@ -114,10 +113,10 @@ conflicts and ensure the smooth coexistence of annotations within the framework.
 
 \f{} should add support for marking not just top-level functions, but also other AST nodes.
 This feature would enrich the framework further, as users would have more freedom
-to change how transformations happen. These new annotations may be inside the function itself,
+to change the emitted code. These new annotations may be inside the function itself,
 marking nodes inline, or even at the source level. Additionally, they may be related to a particular annotation,
 thus, creating sets of domain-specific annotations.
-For example, \annotation{\$Fixed}, whose objective is related to ``faasification'',
+For example, \annotation{\$Fixed}, whose scope is related to ``FaaSification'',
 could have \textit{children} annotations that would issue a warning if used under other top-level annotations.
 \begin{lstlisting}[language=javascript]
 /** $\dollar$Fixed */
