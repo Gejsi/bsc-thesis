@@ -1,7 +1,5 @@
 \chapter{Introduction}
 \label{chap:introduction}
-% Briefly introduce the topic of serverless computing and its growing significance in modern software development.
-% Mention the challenges and complexities developers face when working with serverless architectures.
 Modern software development requires complex tooling to handle
 the intricate landscape encompassing the actual code and business logic.
 Besides the program implementation, there are many components to consider
@@ -12,21 +10,26 @@ Traditionally, software was written in monolithic architectures where
 the program's components are tightly coupled and tend to create
 large codebases, as they provide heterogeneous functionalities under the same interface.
 This paradigm, despite being the oldest, still has some benefits that
-draw developers' attention especially in the early stages of the development lifecycle:
-indeed, these architectures furnish the maximum amount of control over the infrastructure,
-are easier to write because they do not need advanced orchestration mechanisms,
-and they simplify testing and debugging.
+draw developers' attention especially in the early stages of the development lifecycle.
+Indeed, these architectures are easier to write because they do not need advanced orchestration mechanisms,
+they simplify testing and debugging, and they provide the maximum amount of control over the infrastructure:
+this means that developers have the authority to configure, manage,
+and optimize each component of the application according to their preferences and requirements.
+To illustrate, consider an e-commerce application where all features,
+from user authentication to order processing, are bundled together within a monolithic structure:
+in this context, the developers decide how all the software units interact
+and how resources are allocated to ensure optimal performance.
 Yet, the drawbacks of this paradigm were understood even in the past:
 a case in point is the \textit{Unix} community, which moved away from it,
-preferring a modular approach instead. Monoliths are hard to maintain, deploy,
+preferring a modular approach instead \cite{unix}. Monoliths are hard to maintain, deploy,
 adapt to changing requirements and technologies, and they
 become rigid quickly as reshaping its components may involuntarily cause a chain of problems.
 
-On the other hand, a modular approach, where features are developed in
-independent software units, gained popularity in the cloud services realm.
-These so-called microservices architectures arrange
-programs into collections of orchestrated, loosely coupled, fine-grained services
-which communicate through protocols such as HTTP.
+The modular approach, where features are developed in
+independent software units, gained popularity especially in the cloud services realm.
+The de facto standard of cloud architectures is represented by \textit{microservices},
+which arrange programs into collections of loosely coupled, fine-grained services
+that communicate through protocols such as HTTP.
 A microservice is a self-contained service, organized around a specific set
 of needed business capabilities, that lets developers easily implement a layered architecture
 using different technologies (e.g., programming languages, databases, etc.).
@@ -34,19 +37,19 @@ This distributed architectural pattern overcomes the shortcomings of monoliths,
 as its modular nature makes it scalable, easily deployable, and allows different teams
 to work together without the risk of taking down the entire structure when a minor issue arrives.
 
-Still, microservices are not the most efficient way of handling cloud computing,
-since they are long-running processes that need to be carefully planned and managed
+Still, microservices are not the most efficient way of implementing cloud computing architectures,
+since they are long-running processes whose deployment needs to be carefully planned and managed
 by configuring the underlying infrastructure. To reduce these operational costs,
 serverless architectures were recently created.
 
-The serverless pattern promises to let its users focus simply on the business logic,
+The serverless paradigm promises to let its users focus simply on the business logic,
 by shifting to the cloud platform provider the infrastructure management,
-resources allocation and provisioning, thus enabling computing units to autoscale on a pay-as-you go manner.
+resources allocation and provisioning, thus enabling software units to scale automatically on demand.
 In this model, users write the code inside single-purpose units (i.e., programming languages' functions),
 even smaller than microservices in responsibility,
-and they set which event will trigger its invocation.
+and they set which event will trigger their invocation.
 This event-driven model of dispatching actions is very efficient, in fact,
-when a function is triggered, the cloud vendor executes it in an isolated, secure and short-lived environment.
+when a function is triggered, the cloud vendor executes it in an isolated, secure, and short-lived environment.
 Consequently, users are only billed for the precise resources consumed during this execution period.
 
 Serverless is not free of disadvantages and, while traditional solutions
@@ -57,7 +60,7 @@ the serverless model is still in its infancy and lacks a similar depth of accumu
 
 \section{Objectives} % *incremental adoption*
 
-In this thesis we present \f{}, a framework which aims to enhance serverless architectures
+In this thesis, we present \f{}, a framework which aims to enhance serverless programming
 by simplifying the development of cloud functions through its meta-programming functionalities.
 Users mark the serverless functions with annotations that signal the \f{} compiler
 which code transformations are going to be needed and which metadata will be used
@@ -65,11 +68,5 @@ for their deployment, therefore streamlining different parts of the development 
 \f{} transpiles \textit{JavaScript} codebases whose functions are executed
 through \textit{AWS Lambda}'s \textit{Node.js} runtime.
 This is accompanied by the seamless management of projects
-through our user-friendly CLI, ensuring an efficient and graceful path
+through its user-friendly CLI, ensuring an efficient and graceful path
 into the adoption of the serverless model.
-
-% The thesis is structured as follows:
-% \begin{itemize}
-%   \item In \cref{chap:background}, we delve deeper into all the information
-%     needed to understand serverless architectures and 
-% \end{itemize}

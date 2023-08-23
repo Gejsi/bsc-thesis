@@ -2,12 +2,11 @@
 \label{chap:conclusion}
 
 After a brief introduction, we discussed all the necessary knowledge needed
-to understand this thesis in \cref{chap:background}, and finally we inspected
-how \f{} works by thoroughly examining its inner components in \cref{chap:implementation}.
+to understand this thesis in \cref{chap:background}, and finally we presented
+how \f{} works, by thoroughly examining its inner components in \cref{chap:implementation}.
 
-The most important concept to recall about this framework is its goal,
-and how it tries to achieve it.
-\f{} wants to enhance the serverless model through its meta-programming
+The most important concept to recall about this framework is its goal, and how it tries to achieve it.
+\f{} wants to enhance the serverless programming model through its meta-programming
 features. In fact, its core annotations operate very differently from each other,
 as they are related to distinct domains, but they still can be combined
 to enrich the development experience.
@@ -18,12 +17,13 @@ transformations that can save precious development time.
 
 \f{} was also designed to help migrate existing
 monolithic codebases into serverless ones through an incremental approach,
-meaning that, users do not need to convert their entire project, but they
-can partially adopt this new computing paradigm by iteratively rewriting features.
-Additionally, it is crucial to comprehend that the code
-emitted by \f{} is not set in stone, instead, it can be actively modified
-and even used as a starting point for the codebase.
-\f{} should be viewed as a co-pilot rather than a fully comprehensive tool to write serverless functions.
+meaning that users do not need to convert their entire project, but they
+can partially adopt this new computing paradigm by iteratively annotating which
+components should be deployed as independent functions.
+Additionally, it is crucial to understand that the code
+emitted by \f{} is not set in stone. Instead, it can be actively modified
+and even used as a starting point of a serverless codebase.
+\f{} should be viewed as a coding assistant rather than a fully comprehensive tool to write serverless functions.
 
 \f{}'s most notable limitation is the lack of more core annotations,
 which stems from the substantial time investment required
@@ -34,12 +34,12 @@ that cannot be foreseen by \f{} due to their unique nature.
 
 Another important decision to discuss is our rationale behind selecting \textit{TypeScript}.
 Many other programming languages offer meta-programming compile-time capabilities,
-like \textit{Rust} macros, \textit{C++} templates or \textit{Zig} comptime:
-such systems are far superior to our annotations, yet,
+like \textit{Rust} macros, \textit{C++} templates or \textit{Zig} comptime.
+Such systems are far superior to our annotations, yet,
 these low-level languages are not suitable for the high-level programming
 that the serverless functions are supposed to entail, in fact most of these languages
 do not have the runtime support from any major platform provider.
-Moreover, even high-level languages with similar compile-time features like \textit{Scala}
+Moreover, even high-level languages with similar compile-time features, like \textit{Scala},
 demand to be monitored with caution, because of their heavy
 runtime (i.e., \textit{JVM} for \textit{Scala}) initialization spin-ups
 that may cause expensive cold starts.
@@ -47,7 +47,7 @@ that may cause expensive cold starts.
 \textit{TypeScript}, enriched with our annotations, perfectly fits
 the serverless model as it runs, after its strict static type checks,
 on \textit{Node.js}, which is a well-suited lightweight environment
-designed to handle distributed services as discussed in \cref{sec:node}.
+designed to handle distributed services, as discussed in \cref{sec:node}.
 
 \section{Comparison with previous studies}
 
@@ -58,17 +58,17 @@ who have explored and presented various solutions to this challenge.
 
 The first attempts were developed for \textit{Python} and \textit{Java} monoliths,
 with the tools being named respectively \textit{Lambada} \cite{lambada} and \textit{Termite} \cite{termite}.
-They are fairly limited as their emitted code cannot correctly process inputs,
+They are fairly limited, as their emitted code cannot correctly process inputs,
 and they do not support the use of global variables within the serverless functions.
 
 Instead, let us focus on the technologies built around \textit{JavaScript}:
 
 \paragraph{\textbf{Node2Faas} \cite{node2faas}}
-It was the first \textit{JavaScript} ``faasifier'':
-it converts methods of the \textit{Node.js} monolith into serverless
+It was the first \textit{JavaScript} ``FaaSifier''.
+It converts methods of the \textit{Node.js} monolith into serverless
 functions and replaces their bodies with an API call to the target FaaS system.
-This tool has many weaknesses: most notably it cannot resolve neither code
-nor package dependencies, which is a considerable constraint since many
+This tool has many weaknesses: most notably, it cannot resolve either code
+or package dependencies, which is a considerable constraint since many
 cloud functions work by using third-party services.
 
 \paragraph{\textbf{DAF} and \textbf{M2FaaS} \cite{daf, m2faas}}
@@ -106,9 +106,9 @@ We close this thesis by listing a few of the enhancements \f{} could receive.
 \subsection{More annotations}
 
 \f{} should have more core annotations.
-Also, while the existing annotations currently don't exhibit conflicts with each other,
-it's prudent to anticipate potential conflicts that could arise when new annotations are introduced:
-consequently, incorporating new constraints becomes essential to prevent such
+Also, while the existing annotations currently do not exhibit conflicts with each other,
+it is prudent to anticipate potential conflicts that could arise when new annotations are introduced.
+Consequently, incorporating new constraints becomes essential to prevent such
 conflicts and ensure the smooth coexistence of annotations within the framework.
 
 \f{} should add support for marking not just top-level functions, but also other AST nodes.
@@ -149,8 +149,8 @@ as this would give solid foundations to \f{}:
 Currently, there is no standalone linter or set of rules for existing ones
 that captures serverless principles and enforces them on projects.
 A new linter may analyze the code, flag architectural smells,
-and warn users whenever they are breaking best practices:
-for example, the linter may issue an error if there is a serverless function invoking another one,
+and warn users whenever they are breaking best practices.
+For example, the linter may issue an error if there is a serverless function invoking another one,
 as this could lead to increased costs, more debugging complexity, and a breach of the isolation principle.
 
 Furthermore, a new linter could be built specifically for \f{},
