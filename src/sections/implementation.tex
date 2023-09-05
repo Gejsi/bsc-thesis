@@ -179,7 +179,7 @@ The \verb|annotations| field locates custom annotations as it takes an object
 where the keys represent the new names and the values refer to their associated implementations.
 
 \paragraph{\textbf{Fenrir's CLI}}
-After creating the configuration, \f{} can be started through our CLI tool
+After creating the configuration, \f{} can be started through its CLI tool
 by optionally passing as a flag the directory in which it is contained.
 \begin{lstlisting}[language=bash, style=bashstyle]
 # defaults to the current directory (.) for its file lookup...
@@ -190,8 +190,6 @@ by optionally passing as a flag the directory in which it is contained.
 Furthermore, the CLI offers the \verb|init| sub-command to ease the setup needed for the entire pipeline
 by generating the necessary boilerplate and configuration files.
 
-% TODO: ricorda di parlare di quanto sia ottimo il compiler api di ts in Background.
-% perché ha informazioni su tutto il progetto e non solo sui file.
 \subsubsection{AST Traversal}
 
 Through the \textit{TypeScript} compiler API, each sources' AST is traversed
